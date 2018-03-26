@@ -28,14 +28,14 @@ public class SalidaBean {
     /**
      * @return the id_Entrada
      */
-    public int getId_Entrada() {
+    public EntradaBean getId_Entrada() {
         return id_Entrada;
     }
 
     /**
      * @param id_Entrada the id_Entrada to set
      */
-    public void setId_Entrada(int id_Entrada) {
+    public void setId_Entrada(EntradaBean id_Entrada) {
         this.id_Entrada = id_Entrada;
     }
 
@@ -70,35 +70,37 @@ public class SalidaBean {
     /**
      * @return the id_receta
      */
-    public int getId_receta() {
+    public RecetaBean getId_receta() {
         return id_receta;
     }
 
     /**
      * @param id_receta the id_receta to set
      */
-    public void setId_receta(int id_receta) {
+    public void setId_receta(RecetaBean id_receta) {
         this.id_receta = id_receta;
     }
 
     /**
      * @return the id_vale
      */
-    public int getId_vale() {
+    public ValeBean getId_vale() {
         return id_vale;
     }
 
     /**
      * @param id_vale the id_vale to set
      */
-    public void setId_vale(int id_vale) {
+    public void setId_vale(ValeBean id_vale) {
         this.id_vale = id_vale;
     }
+
+ 
     private int idSalida;
-    private int id_Entrada;
+    private EntradaBean id_Entrada;
     private float cantidadSalida;
     private int tipoSalida;
-    private int id_receta;
-    private int id_vale;
+    private RecetaBean id_receta;
+    private ValeBean id_vale;
     
 }

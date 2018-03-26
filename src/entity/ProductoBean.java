@@ -84,28 +84,28 @@ public class ProductoBean {
     /**
      * @return the id_unidadMedida
      */
-    public int getId_unidadMedida() {
+    public UnidadMedidaBean getId_unidadMedida() {
         return id_unidadMedida;
     }
 
     /**
      * @param id_unidadMedida the id_unidadMedida to set
      */
-    public void setId_unidadMedida(int id_unidadMedida) {
+    public void setId_unidadMedida(UnidadMedidaBean id_unidadMedida) {
         this.id_unidadMedida = id_unidadMedida;
     }
 
     /**
      * @return the id_EntradaProducto
      */
-    public int getId_EntradaProducto() {
+    public EntradaBean getId_EntradaProducto() {
         return id_EntradaProducto;
     }
 
     /**
      * @param id_EntradaProducto the id_EntradaProducto to set
      */
-    public void setId_EntradaProducto(int id_EntradaProducto) {
+    public void setId_EntradaProducto(EntradaBean id_EntradaProducto) {
         this.id_EntradaProducto = id_EntradaProducto;
     }
 
@@ -150,13 +150,15 @@ public class ProductoBean {
     public void setSaldoTotalProducto(float saldoTotalProducto) {
         this.saldoTotalProducto = saldoTotalProducto;
     }
+
+  
     private int idProducto;
     private String codigoProducto;
     private String nombreProducto;
     private String descripcionProducto;
     private String nivelUsoProducto;
-    private int id_unidadMedida;
-    private int id_EntradaProducto;
+    private UnidadMedidaBean id_unidadMedida;
+    private EntradaBean id_EntradaProducto;
     private float saldoEntradaProducto; //Bandera;
     private int estadoProducto;
     private float saldoTotalProducto;

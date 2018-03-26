@@ -66,6 +66,8 @@ public class DestinatarioBean {
     public void setEstadoDestinatario(int estadoDestinatario) {
         this.estadoDestinatario = estadoDestinatario;
     }
+
+ 
     private int idDestinatario;
     private String nombreDestinatario;
     private String descripcionDestintario;

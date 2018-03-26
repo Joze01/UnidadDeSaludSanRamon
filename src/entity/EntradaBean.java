@@ -42,14 +42,14 @@ public class EntradaBean {
     /**
      * @return the id_Producto
      */
-    public int getId_Producto() {
+    public ProductoBean getId_Producto() {
         return id_Producto;
     }
 
     /**
      * @param id_Producto the id_Producto to set
      */
-    public void setId_Producto(int id_Producto) {
+    public void setId_Producto(ProductoBean id_Producto) {
         this.id_Producto = id_Producto;
     }
 
@@ -94,11 +94,15 @@ public class EntradaBean {
     public void setFechaVencimientoEntrada(String fechaVencimientoEntrada) {
         this.fechaVencimientoEntrada = fechaVencimientoEntrada;
     }
+
+   
     private int idEntrada;
     private int id_Lote;
-    private int id_Producto;
+    private ProductoBean id_Producto;
     private float cantidadEntrada;
     private float costoEntrada;
     private String fechaVencimientoEntrada;
+
+  
         
 }

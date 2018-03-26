@@ -53,22 +53,24 @@ public class ValeBean {
         this.fechaEntrega = fechaEntrega;
     }
 
+
+    private int idVale;
+    private String codigoVale;
+    private String fechaEntrega;
+    private DestinatarioBean id_destinatario;
+
     /**
      * @return the id_destinatario
      */
-    public int getId_destinatario() {
+    public DestinatarioBean getId_destinatario() {
         return id_destinatario;
     }
 
     /**
      * @param id_destinatario the id_destinatario to set
      */
-    public void setId_destinatario(int id_destinatario) {
+    public void setId_destinatario(DestinatarioBean id_destinatario) {
         this.id_destinatario = id_destinatario;
     }
-    private int idVale;
-    private String codigoVale;
-    private String fechaEntrega;
-    private int id_destinatario;
     
 }
