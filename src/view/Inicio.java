@@ -5,16 +5,22 @@
  */
 package view;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Jose
  */
-public class inicio extends javax.swing.JFrame {
+public class Inicio extends javax.swing.JFrame {
 
+    //VARIABLE BANDERA PARA MULTIPLES VENTANAS.
+    static  int bandera = 0;
+    
+    
     /**
      * Creates new form inicio
      */
-    public inicio() {
+    public Inicio() {
         initComponents();
     }
 
@@ -46,10 +52,15 @@ public class inicio extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         fileMenu.setMnemonic('f');
-        fileMenu.setText("File");
+        fileMenu.setText("Recetas");
 
         openMenuItem.setMnemonic('o');
-        openMenuItem.setText("Open");
+        openMenuItem.setText("Abrir Hijo");
+        openMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openMenuItemActionPerformed(evt);
+            }
+        });
         fileMenu.add(openMenuItem);
 
         saveMenuItem.setMnemonic('s');
@@ -73,7 +84,7 @@ public class inicio extends javax.swing.JFrame {
         menuBar.add(fileMenu);
 
         editMenu.setMnemonic('e');
-        editMenu.setText("Edit");
+        editMenu.setText("Vales");
 
         cutMenuItem.setMnemonic('t');
         cutMenuItem.setText("Cut");
@@ -94,7 +105,7 @@ public class inicio extends javax.swing.JFrame {
         menuBar.add(editMenu);
 
         helpMenu.setMnemonic('h');
-        helpMenu.setText("Help");
+        helpMenu.setText("Generales");
 
         contentMenuItem.setMnemonic('c');
         contentMenuItem.setText("Contents");
@@ -126,6 +137,17 @@ public class inicio extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
+    private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
+        // TODO add your handling code here:
+        if(bandera!=1){
+        Hijo1 ventana = new   Hijo1(); //objeto del frame que se va a abrir
+        desktopPane.add(ventana); //agregarlo al panel de la vista
+        ventana.show(); //mostrar ventana
+        }else{
+            JOptionPane.showMessageDialog(desktopPane,"No se puede abrir mas de una ventana a la vez");
+        }
+    }//GEN-LAST:event_openMenuItemActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -143,20 +165,21 @@ public class inicio extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new inicio().setVisible(true);
+                new Inicio().setVisible(true);
             }
         });
     }
