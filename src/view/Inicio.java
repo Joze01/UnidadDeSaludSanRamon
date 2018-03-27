@@ -6,7 +6,7 @@
 package view;
 
 import javax.swing.JOptionPane;
-
+import view.proveedor.*;
 /**
  *
  * @author Jose
@@ -105,10 +105,15 @@ public class Inicio extends javax.swing.JFrame {
         menuBar.add(editMenu);
 
         helpMenu.setMnemonic('h');
-        helpMenu.setText("Generales");
+        helpMenu.setText("Almacen");
 
         contentMenuItem.setMnemonic('c');
-        contentMenuItem.setText("Contents");
+        contentMenuItem.setText("Proveedores");
+        contentMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contentMenuItemActionPerformed(evt);
+            }
+        });
         helpMenu.add(contentMenuItem);
 
         aboutMenuItem.setMnemonic('a');
@@ -147,6 +152,17 @@ public class Inicio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(desktopPane,"No se puede abrir mas de una ventana a la vez");
         }
     }//GEN-LAST:event_openMenuItemActionPerformed
+
+    private void contentMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contentMenuItemActionPerformed
+        // TODO add your handling code here:
+        if(bandera!=1){
+        Proveedores ventana = new   Proveedores(); //objeto del frame que se va a abrir
+        desktopPane.add(ventana); //agregarlo al panel de la vista
+        ventana.show(); //mostrar ventana
+        }else{
+            JOptionPane.showMessageDialog(desktopPane,"No se puede abrir mas de una ventana a la vez");
+        }
+    }//GEN-LAST:event_contentMenuItemActionPerformed
 
     /**
      * @param args the command line arguments

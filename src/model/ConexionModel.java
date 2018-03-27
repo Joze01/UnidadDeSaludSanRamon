@@ -18,13 +18,14 @@ package model;
 public class ConexionModel {
     
     //Miembros
-    private Connection connect = null;
+    public Connection connect = null;
     private Statement statement = null;
-    private PreparedStatement preparedStatement = null;
+    public PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
     private boolean resultado=false;
     
-   public void open() throws SQLException{
+    
+   public ConexionModel() throws SQLException{
         try
         {
                 //obtenemos el driver de para mysql
@@ -44,9 +45,7 @@ public class ConexionModel {
     
     //Set query resulset
     public void setRs(PreparedStatement statementParam) throws SQLException{
-        this.open();
-          ResultSet executeQuery = statementParam.executeQuery();
-        this.close();
+          resultSet = statementParam.executeQuery();
     }
     
     //get query results
@@ -57,7 +56,7 @@ public class ConexionModel {
     
     public boolean executeQuery(PreparedStatement statementParam) throws SQLException{
         resultado=false;
-        this.open();
+      
         if(statementParam.executeUpdate()>0){  
         resultado=true;
         }
@@ -67,7 +66,7 @@ public class ConexionModel {
     
     
    // Cerrar conexion
-    private void close() {
+    public void close() {
         try {
             if (resultSet != null) {
                 resultSet.close();
