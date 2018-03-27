@@ -24,6 +24,21 @@ public class ProveedorController {
     return resultado;
     }
     
+    public boolean updateProveedor(ProveedorBean proveedorData) throws SQLException{
+    resultado=false;
+        if(modelo.updateProveedor(proveedorData)){
+        return true;
+        }
+    return resultado;
+    }
+    
+    public boolean deleteProveedor(ProveedorBean proveedorData) throws SQLException{
+    resultado=false;
+        if(modelo.deleteProveedor(proveedorData)){
+        return true;
+        }
+    return resultado;
+    }
     
     public JTable cargarTabla() throws SQLException{
         JTable tablacompleta = modelo.cargarTabla();

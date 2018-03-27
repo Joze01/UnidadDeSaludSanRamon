@@ -28,8 +28,7 @@ public class ProveedorModel {
     public boolean newProveedor(ProveedorBean provedorData) throws SQLException{
        
         resultado=false;
-        String query = "INSERT INTO proveedor(nombreProveedor, descripcionProveedor, estadoproveedor) VALUES (?,?,?)";
-        System.out.println(query);
+         query = "INSERT INTO proveedor(nombreProveedor, descripcionProveedor, estadoproveedor) VALUES (?,?,?)";
         conexion = new ConexionModel();
         PreparedStatement ps = conexion.connect.prepareStatement(query);
         ps.setString(1, provedorData.getNombreProveedor());
@@ -43,12 +42,40 @@ public class ProveedorModel {
         return resultado;
     }
     
+    public boolean updateProveedor(ProveedorBean provedorData) throws SQLException{
+        resultado=false;
+        conexion = new ConexionModel();
+         query = "UPDATE proveedor SET nombreProveedor=?,"
+                + "descripcionProveedor=?,"
+                + "estadoproveedor=? "
+                + "WHERE idProveedor=?";
+        PreparedStatement ps = conexion.connect.prepareStatement(query);
+        ps.setString(1, provedorData.getNombreProveedor());
+        ps.setString(2, provedorData.getDescripcionProveedor());
+        ps.setInt(3, provedorData.getEstadoProveedor());
+        ps.setInt(4, provedorData.getIdProveedor());
+        System.out.println(ps.toString());
+        if(conexion.executeQuery(ps)){
+         resultado=true;
+        }
+        return resultado;
+    }
     
+    public boolean deleteProveedor(ProveedorBean provedorData) throws SQLException{
+        resultado=false;
+        conexion = new ConexionModel();
+         query = "DELETE FROM proveedor WHERE idProveedor?";
+        PreparedStatement ps = conexion.connect.prepareStatement(query);
+        System.out.println(ps.toString());
+        if(conexion.executeQuery(ps)){
+         resultado=true;
+        }
+        return resultado;
+    }
     public JTable cargarTabla() throws SQLException{
         utilidades=new utilModel();
         JTable tablaResultado;
-        String query = "select * from proveedor";
-        System.out.println(query);
+         query = "select * from proveedor";
         conexion = new ConexionModel();
         PreparedStatement ps = conexion.connect.prepareStatement(query);
         conexion.setRs(ps);
