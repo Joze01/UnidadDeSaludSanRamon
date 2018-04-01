@@ -17,20 +17,20 @@ import javax.swing.table.DefaultTableModel;
  * @author Jose
  */
 public class Proveedores extends javax.swing.JInternalFrame {
-ProveedorController controller = new ProveedorController(); 
- ProveedorBean proveedorData = new ProveedorBean();
+    ProveedorController controller = new ProveedorController(); 
+    ProveedorBean proveedorData = new ProveedorBean();
     /**
      * Creates new form NuevoProveedor
      */
     public Proveedores() {
         initComponents();
+        
         try{
         jTable1.setModel(controller.cargarTabla().getModel());
-        
-        
         }catch(SQLException ex){
             System.out.println(ex.toString());
         }
+        
     }
 
     /**
@@ -386,6 +386,8 @@ ProveedorController controller = new ProveedorController();
         proveedorData.setNombreProveedor(nuevo_txtnombre.getText());
         proveedorData.setDescripcionProveedor(nuevo_txtDescripcion.getText());
         proveedorData.setEstadoProveedor(nuevo_combEstado.getSelectedIndex());
+        
+        
         try {
            if (controller.newProveedor(proveedorData)){
            JOptionPane.showMessageDialog(this, "Completado Exitosamente");
@@ -446,16 +448,26 @@ ProveedorController controller = new ProveedorController();
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         DefaultTableModel modeloTabla = (DefaultTableModel)jTable1.getModel();
+        
         int selectedRowIndex = jTable1.getSelectedRow();
+        
+        
+        
+        
         modificar_txtId.setText(modeloTabla.getValueAt(selectedRowIndex,0).toString());
         modificar_txtnombre.setText(modeloTabla.getValueAt(selectedRowIndex,1).toString());
         modificar_txtDescripcion.setText(modeloTabla.getValueAt(selectedRowIndex,2).toString());
         modificar_combEstado.setSelectedIndex(Integer.parseInt(modeloTabla.getValueAt(selectedRowIndex,3).toString()));
+        eliminar_txtId.setText(modeloTabla.getValueAt(selectedRowIndex,0).toString());
+        eliminar_txtnombre.setText(modeloTabla.getValueAt(selectedRowIndex,1).toString());
+        eliminar_txtDescripcion.setText(modeloTabla.getValueAt(selectedRowIndex,2).toString());
+        
         
         //cambio de tab para el tabpane...
         if(jTabbedPane2.getSelectedIndex()<1){
         jTabbedPane2.setSelectedIndex(1);
         }
+        
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void eliminar_txtnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminar_txtnombreActionPerformed

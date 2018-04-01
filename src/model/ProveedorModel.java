@@ -28,13 +28,20 @@ public class ProveedorModel {
     public boolean newProveedor(ProveedorBean provedorData) throws SQLException{
        
         resultado=false;
-         query = "INSERT INTO proveedor(nombreProveedor, descripcionProveedor, estadoproveedor) VALUES (?,?,?)";
+        query = "INSERT INTO proveedor(nombreProveedor, descripcionProveedor, estadoproveedor) VALUES (?,?,?)";
         conexion = new ConexionModel();
+        
+        
         PreparedStatement ps = conexion.connect.prepareStatement(query);
         ps.setString(1, provedorData.getNombreProveedor());
         ps.setString(2, provedorData.getDescripcionProveedor());
         ps.setInt(3, provedorData.getEstadoProveedor());
+        
+        
         System.out.println(ps.toString());
+        
+        
+        
         if(conexion.executeQuery(ps)){
          resultado=true;
         }
@@ -49,11 +56,15 @@ public class ProveedorModel {
                 + "descripcionProveedor=?,"
                 + "estadoproveedor=? "
                 + "WHERE idProveedor=?";
+         
         PreparedStatement ps = conexion.connect.prepareStatement(query);
         ps.setString(1, provedorData.getNombreProveedor());
         ps.setString(2, provedorData.getDescripcionProveedor());
         ps.setInt(3, provedorData.getEstadoProveedor());
         ps.setInt(4, provedorData.getIdProveedor());
+        
+        
+        
         System.out.println(ps.toString());
         if(conexion.executeQuery(ps)){
          resultado=true;
@@ -72,16 +83,27 @@ public class ProveedorModel {
         }
         return resultado;
     }
+    
+    
+    
     public JTable cargarTabla() throws SQLException{
         utilidades=new utilModel();
         JTable tablaResultado;
-         query = "select * from proveedor";
+        
+        query = "select * from proveedor";
         conexion = new ConexionModel();
+        
         PreparedStatement ps = conexion.connect.prepareStatement(query);
         conexion.setRs(ps);
+ 
         rs=conexion.getRs();
+        
         String[] columnas = new String[]{"#","Nombre","Descripcion","Estado"};
+        
         tablaResultado=utilidades.cargarTabla(columnas, rs);
+        
+        
+        
         conexion.close();
                 
         

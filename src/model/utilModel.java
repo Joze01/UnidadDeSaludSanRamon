@@ -20,16 +20,21 @@ public class utilModel {
     public JTable cargarTabla(String[] columnas,ResultSet rs) throws SQLException{
         JTable tabla = null; 
       
+        
+        
         modelotabla=new DefaultTableModel(null,columnas);
+        
+        
         //tabla.setModel(modelotabla);
         ResultSetMetaData rsmd = rs.getMetaData();
         int cantidadColumnas = rsmd.getColumnCount();
+        
         Object datos[] = new Object[cantidadColumnas];
         
         while(rs.next()){//recorrer registros
             for(int i=0;i<cantidadColumnas;i++){ //cargar datos
                 datos[i]=rs.getString(i+1);
-              
+                //[id,nombre,descripcion,estado]
             }
             
             modelotabla.addRow(datos);
