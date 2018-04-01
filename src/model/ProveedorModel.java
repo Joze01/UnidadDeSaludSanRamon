@@ -26,26 +26,17 @@ public class ProveedorModel {
     ResultSet rs;
     
     public boolean newProveedor(ProveedorBean provedorData) throws SQLException{
-       
         resultado=false;
         query = "INSERT INTO proveedor(nombreProveedor, descripcionProveedor, estadoproveedor) VALUES (?,?,?)";
         conexion = new ConexionModel();
-        
-        
         PreparedStatement ps = conexion.connect.prepareStatement(query);
         ps.setString(1, provedorData.getNombreProveedor());
         ps.setString(2, provedorData.getDescripcionProveedor());
         ps.setInt(3, provedorData.getEstadoProveedor());
-        
-        
         System.out.println(ps.toString());
-        
-        
-        
         if(conexion.executeQuery(ps)){
          resultado=true;
         }
-        
         return resultado;
     }
     
