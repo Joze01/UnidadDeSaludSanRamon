@@ -44,6 +44,7 @@ public class mdiSanRamon extends javax.swing.JFrame {
         itemLotes = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Unidad de salud San Ramón");
         setPreferredSize(new java.awt.Dimension(900, 700));
 
         fileMenu.setMnemonic('f');
