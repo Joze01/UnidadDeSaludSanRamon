@@ -14,7 +14,7 @@ import view.proveedor.*;
 public class Inicio extends javax.swing.JFrame {
 
     //VARIABLE BANDERA PARA MULTIPLES VENTANAS.
-    static  int bandera = 0;
+    static  int bandera = 0;;
     
     
     /**
@@ -191,11 +191,12 @@ public class Inicio extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Inicio().setVisible(true);
+                Login ventanaLogin = new Login();
+                ventanaLogin.setVisible(true);
             }
         });
     }
