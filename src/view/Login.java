@@ -115,7 +115,7 @@ public class Login extends javax.swing.JFrame {
         try {
             if (LoginModel.CheckPassword(Usuario)) {
                 
-                Inicio ventanaInicio = new Inicio();
+                mdiSanRamon ventanaInicio = new mdiSanRamon();
                 ventanaInicio.setSize(800,600);
                 ventanaInicio.setVisible(true);
                 this.dispose();
