@@ -57,7 +57,7 @@ public class ConexionModel {
     public boolean executeQuery(PreparedStatement statementParam) throws SQLException{
         resultado=false;
       
-        if(statementParam.executeUpdate()>0){  
+        if(statementParam.executeUpdate() > 0){  
         resultado=true;
         }
         this.close();
