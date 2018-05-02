@@ -46,4 +46,9 @@ public class ProveedorController {
         return  tablacompleta;
     }
     
+    public JTable busqueda(String valor) throws SQLException{
+        JTable tablacompleta = modelo.busqueda(valor);
+       
+        return  tablacompleta;
+    }
 }
