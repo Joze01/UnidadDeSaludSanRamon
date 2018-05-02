@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -5,34 +6,32 @@
  */
 package model;
 
-import entity.ProveedorBean;
+import entity.DestinatarioBean;
 import javax.swing.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Jose
+ * @author hilde
  */
-public class ProveedorModel {
-
+public class DestinatarioModel {
     boolean resultado = false;
     String query = "";
     ConexionModel conexion;
     utilModel utilidades;
     ResultSet rs;
 
-    public boolean newProveedor(ProveedorBean provedorData) throws SQLException {
+    public boolean newDestinatario(DestinatarioBean destinatarioData) throws SQLException {
 
         resultado = false;
-        query = "INSERT INTO proveedor(nombreProveedor, descripcionProveedor, estadoproveedor) VALUES (?,?,?)";
+        query = "INSERT INTO destinatario(nombreDestinatario, descripcionDestinatario, estadoDestinatario) VALUES (?,?,?)";
         conexion = new ConexionModel();
         PreparedStatement ps = conexion.connect.prepareStatement(query);
-        ps.setString(1, provedorData.getNombreProveedor());
-        ps.setString(2, provedorData.getDescripcionProveedor());
-        ps.setInt(3, provedorData.getEstadoProveedor());
+        ps.setString(1, destinatarioData.getNombreDestinatario());
+        ps.setString(2, destinatarioData.getDescripcionDestintario());
+        ps.setInt(3, destinatarioData.getEstadoDestinatario());
         System.out.println(ps.toString());
         if (conexion.executeQuery(ps)) {
             resultado = true;
@@ -41,16 +40,16 @@ public class ProveedorModel {
         return resultado;
     }
 
-    public boolean updateProveedor(ProveedorBean provedorData) throws SQLException {
+    public boolean updateDestinatario(DestinatarioBean destinatarioData) throws SQLException {
         resultado = false;
         conexion = new ConexionModel();
-        query = "UPDATE proveedor SET nombreProveedor=?,"
-                + "descripcionProveedor=? "                
-                + "WHERE idProveedor=?";
+        query = "UPDATE destinatario SET nombreDestinatario=?,"
+                + "descripcionDestinatario=? "                
+                + "WHERE idDestinatario=?";
         PreparedStatement ps = conexion.connect.prepareStatement(query);
-        ps.setString(1, provedorData.getNombreProveedor());
-        ps.setString(2, provedorData.getDescripcionProveedor());        
-        ps.setInt(3, provedorData.getIdProveedor());
+        ps.setString(1, destinatarioData.getNombreDestinatario());
+        ps.setString(2, destinatarioData.getDescripcionDestintario());        
+        ps.setInt(3, destinatarioData.getIdDestinatario());
         System.out.println(ps.toString());
         if (conexion.executeQuery(ps)) {
             resultado = true;
@@ -58,12 +57,12 @@ public class ProveedorModel {
         return resultado;
     }
 
-    public boolean deleteProveedor(ProveedorBean provedorData) throws SQLException {
+    public boolean deleteDestinatario(DestinatarioBean destinatarioData) throws SQLException {
         resultado = false;
         conexion = new ConexionModel();
-        query = "update proveedor set estadoProveedor=0 WHERE idProveedor=?";
+        query = "update destinatario set estadoDestinatario=0 WHERE idDestinatario=?";
         PreparedStatement ps = conexion.connect.prepareStatement(query);
-        ps.setInt(1, provedorData.getIdProveedor());
+        ps.setInt(1, destinatarioData.getIdDestinatario());
         System.out.println(ps.toString());
         if (conexion.executeQuery(ps)) {
             resultado = true;
@@ -74,7 +73,7 @@ public class ProveedorModel {
     public JTable cargarTabla() throws SQLException {
         utilidades = new utilModel();
         JTable tablaResultado;
-        query = "select * from proveedor where estadoproveedor=1";
+        query = "select * from destinatario where estadoDestinatario=1";
         conexion = new ConexionModel();
         PreparedStatement ps = conexion.connect.prepareStatement(query);
         conexion.setRs(ps);
@@ -89,8 +88,8 @@ public class ProveedorModel {
     public JTable busqueda(String valor) throws SQLException {
         utilidades = new utilModel();
         JTable tablaResultado;
-        query = "select * from proveedor where (nombreProveedor like '"+valor+"%' or "
-                + "descripcionProveedor like '"+valor+"%') and estadoProveedor=1";
+        query = "select * from destinatario where (nombreDestinatario like '"+valor+"%' or "
+                + "descripcionDestinatario like '"+valor+"%') and estadoDestinatario=1";
         conexion = new ConexionModel();
         PreparedStatement ps = conexion.connect.prepareStatement(query);
         conexion.setRs(ps);
@@ -102,3 +101,4 @@ public class ProveedorModel {
         return tablaResultado;
     }
 }
+>>>>>>> origin/Mata

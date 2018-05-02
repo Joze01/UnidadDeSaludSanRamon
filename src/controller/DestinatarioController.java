@@ -1,40 +1,43 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package controller;
-import model.ProveedorModel;
-import entity.ProveedorBean;
+
+import model.DestinatarioModel;
+import entity.DestinatarioBean;
 import java.sql.SQLException;
 import javax.swing.*;
+
 /**
  *
- * @author Jose
+ * @author hilde
  */
-public class ProveedorController {
-    ProveedorModel modelo = new ProveedorModel();
+public class DestinatarioController {
+    DestinatarioModel modelo = new DestinatarioModel();
     boolean resultado=false;
     
-    public boolean newProveedor(ProveedorBean proveedorData) throws SQLException{
+    public boolean newDestinatario(DestinatarioBean destinatarioData) throws SQLException{
     resultado=false;
-        if(modelo.newProveedor(proveedorData)){
+        if(modelo.newDestinatario(destinatarioData)){
         return true;
         }
     return resultado;
     }
     
-    public boolean updateProveedor(ProveedorBean proveedorData) throws SQLException{
+    public boolean updateDestinatario(DestinatarioBean destinatarioData) throws SQLException{
     resultado=false;
-        if(modelo.updateProveedor(proveedorData)){
+        if(modelo.updateDestinatario(destinatarioData)){
         return true;
         }
     return resultado;
     }
     
-    public boolean deleteProveedor(ProveedorBean proveedorData) throws SQLException{
+    public boolean deleteDestinatario(DestinatarioBean destinatarioData) throws SQLException{
     resultado=false;
-        if(modelo.deleteProveedor(proveedorData)){
+        if(modelo.deleteDestinatario(destinatarioData)){
         return true;
         }
     return resultado;
@@ -52,3 +55,4 @@ public class ProveedorController {
         return  tablacompleta;
     }
 }
+>>>>>>> origin/Mata
