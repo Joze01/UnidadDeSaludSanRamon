@@ -5,6 +5,9 @@
  */
 package view;
 
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author antonio
@@ -220,10 +223,15 @@ public class mdiSanRamon extends javax.swing.JFrame {
     private void itemMedidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMedidasActionPerformed
         if(UnidadMedidaMantenimiento.bandera==0)
         {
+            try{
             UnidadMedidaMantenimiento mantenimientoMedida = new UnidadMedidaMantenimiento();
             desktopPane.add(mantenimientoMedida);
             mantenimientoMedida.show();
             UnidadMedidaMantenimiento.bandera=1;
+            }catch(SQLException e)
+            {
+                JOptionPane.showMessageDialog(this, e);
+            }
         }
     }//GEN-LAST:event_itemMedidasActionPerformed
 
