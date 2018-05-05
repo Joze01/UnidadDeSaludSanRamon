@@ -52,7 +52,7 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setText("Contraseña:");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel3.setText("Clinica San Ramon");
+        jLabel3.setText("UCSF de San Ramon");
 
         LoginButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         LoginButton.setText("Ingresar");
