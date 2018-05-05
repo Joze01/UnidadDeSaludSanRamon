@@ -101,4 +101,3 @@ public class DestinatarioModel {
         return tablaResultado;
     }
 }
->>>>>>> origin/Mata
