@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 27, 2018 at 05:56 PM
+-- Generation Time: May 05, 2018 at 03:28 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.0.27
 
@@ -47,7 +47,7 @@ CREATE TABLE `entrada` (
   `id_Producto` int(11) NOT NULL,
   `cantidadEntrada` float NOT NULL,
   `costoEntrada` float NOT NULL,
-  `fechaVencimientoEntrada` date NOT NULL
+  `fechaVencimientoEntrada` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -101,7 +101,8 @@ CREATE TABLE `proveedor` (
 
 INSERT INTO `proveedor` (`idProveedor`, `nombreProveedor`, `descripcionProveedor`, `estadoproveedor`) VALUES
 (1, 'prove', 'proveed', 0),
-(2, 'prove', 'proveed', 1);
+(2, 'prove', 'proveed', 1),
+(3, 'proveedor3', 'descripcion3', 1);
 
 -- --------------------------------------------------------
 
@@ -127,7 +128,8 @@ CREATE TABLE `salida` (
   `cantidadSalida` float NOT NULL,
   `tipoSalida` int(11) NOT NULL,
   `id_receta` int(11) NOT NULL,
-  `id_vale` int(11) NOT NULL
+  `id_vale` int(11) NOT NULL,
+  `fechaSalida` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -276,7 +278,7 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT for table `proveedor`
 --
 ALTER TABLE `proveedor`
-  MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `receta`
@@ -329,7 +331,7 @@ ALTER TABLE `lote`
 -- Constraints for table `producto`
 --
 ALTER TABLE `producto`
-  ADD CONSTRAINT `f_producto_entrada` FOREIGN KEY (`Id_EntradaProducto`) REFERENCES `producto` (`idProducto`),
+  ADD CONSTRAINT `f_producto_entrada` FOREIGN KEY (`Id_EntradaProducto`) REFERENCES `entrada` (`idEntrada`),
   ADD CONSTRAINT `f_unidadMedida_producto` FOREIGN KEY (`id_UnidadMedida`) REFERENCES `unidadmedida` (`idUnidadMedida`);
 
 --

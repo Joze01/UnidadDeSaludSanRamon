@@ -34,7 +34,7 @@ public class UnidadMedidaMantenimiento extends javax.swing.JInternalFrame {
         
         String[] columns = 
         {
-            //"Cod_alumno", "Cod_materia"
+            
             "ID","Nombre","Descripcion", "Estado"
         };
         
@@ -357,6 +357,8 @@ public class UnidadMedidaMantenimiento extends javax.swing.JInternalFrame {
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
         modelo1.setRowCount(0);
+        limpiarMedida();
+        btnIngresar.setEnabled(true);
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnTodosRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTodosRegistrosActionPerformed
@@ -376,6 +378,11 @@ public class UnidadMedidaMantenimiento extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
+        if(txtNombreUnidad.getText().equals("")||txtDescripcion.getText().equals(""))
+        {
+            JOptionPane.showMessageDialog(this, "¡Debe llenar los campos vacios!","Alerta",JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
         String sql = "update unidadmedida set nombreUnidadMedida='"+txtNombreUnidad.getText()+"', descripcionUnidadMedida='"+txtDescripcion.getText()+"' WHERE idUnidadMedida="+txtcode.getText()+";";
         try {
 
@@ -384,8 +391,11 @@ public class UnidadMedidaMantenimiento extends javax.swing.JInternalFrame {
             conUM.executeQuery(ps);
 
             limpiarMedida();
-        } catch (SQLException ex) {
-            Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            btnIngresar.setEnabled(true);
+            actualizar();
+            } catch (SQLException ex) {
+                Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -399,6 +409,7 @@ public class UnidadMedidaMantenimiento extends javax.swing.JInternalFrame {
             conUM.executeQuery(ps);
 
             limpiarMedida();
+            btnIngresar.setEnabled(true);
         } catch (SQLException ex) {
             Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -419,13 +430,28 @@ public class UnidadMedidaMantenimiento extends javax.swing.JInternalFrame {
         txtNombreUnidad.setText(nombre);
         txtDescripcion.setText(desc);
         txtcode.setText(Integer.toString(codigo));
+        btnIngresar.setEnabled(false);
     }//GEN-LAST:event_jTable2MouseClicked
 
+    private void actualizar()
+    {
+        String sql = "select * from unidadmedida";
+        modelo1.setRowCount(0);
+        try {
+            PreparedStatement ps = conUM.connect.prepareStatement(sql);
+
+        
+            conUM.setRs(ps);
+           generarListado();
+        } catch (SQLException ex) {
+            Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         // TODO add your handling code here:
         if(txtNombreUnidad.getText().equals("")||txtDescripcion.getText().equals(""))
         {
-            JOptionPane.showMessageDialog(this, "¡Debe llenar los campos vacios!");
+            JOptionPane.showMessageDialog(this, "¡Debe llenar los campos vacios!","Alerta",JOptionPane.INFORMATION_MESSAGE);
         }
         else{
         String sql = "insert into unidadmedida(nombreUnidadMedida, descripcionUnidadMedida) VALUES ('"+txtNombreUnidad.getText()+"','"+txtDescripcion.getText()+"')";
@@ -436,6 +462,7 @@ public class UnidadMedidaMantenimiento extends javax.swing.JInternalFrame {
             conUM.executeQuery(ps);
 
             limpiarMedida();
+            actualizar();
         } catch (SQLException ex) {
             Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
         }
