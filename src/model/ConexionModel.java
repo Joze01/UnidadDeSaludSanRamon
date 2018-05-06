@@ -32,7 +32,8 @@ public class ConexionModel {
                 Class.forName("com.mysql.jdbc.Driver");
                 // Se obtiene una conexión con la base de datos. 
                 connect = DriverManager.getConnection (
-                "jdbc:mysql://localhost:3306/sanramon","root", "123456");
+                "jdbc:mysql://localhost:3306/sanramon","root", "");
+
                 // Permite ejecutar sentencias SQL sin parámetros
                 statement = connect.createStatement();
         }

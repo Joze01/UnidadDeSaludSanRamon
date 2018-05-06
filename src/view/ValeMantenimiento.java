@@ -149,6 +149,11 @@ public class ValeMantenimiento extends javax.swing.JInternalFrame {
         cmbDestinatario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jButton1.setText("Ingresar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Modificar");
 
@@ -237,6 +242,10 @@ public class ValeMantenimiento extends javax.swing.JInternalFrame {
     private void lblBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lblBusquedaKeyReleased
         JOptionPane.showMessageDialog(this, lblBusqueda.getText());
     }//GEN-LAST:event_lblBusquedaKeyReleased
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

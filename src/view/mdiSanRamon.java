@@ -23,6 +23,8 @@ public class mdiSanRamon extends javax.swing.JFrame {
      */
     public mdiSanRamon() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setExtendedState(this.MAXIMIZED_BOTH);
     }
 
     /**
@@ -158,7 +160,7 @@ public class mdiSanRamon extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
         );
 
         pack();
@@ -223,7 +225,12 @@ public class mdiSanRamon extends javax.swing.JFrame {
     private void itemProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProductosActionPerformed
         if(ProductoMantenimiento.bandera==0)
         {
-            ProductoMantenimiento mantenimientoProducto = new ProductoMantenimiento();
+            ProductoMantenimiento mantenimientoProducto = null;
+            try {
+                mantenimientoProducto = new ProductoMantenimiento();
+            } catch (SQLException ex) {
+                Logger.getLogger(mdiSanRamon.class.getName()).log(Level.SEVERE, null, ex);
+            }
             desktopPane.add(mantenimientoProducto);
             mantenimientoProducto.show();
             ProductoMantenimiento.bandera=1;
