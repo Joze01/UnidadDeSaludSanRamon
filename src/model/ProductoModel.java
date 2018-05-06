@@ -5,6 +5,7 @@
  */
 package model;
 import entity.ProductoBean;
+import entity.UnidadMedidaBean;
 import model.ConexionModel;
 import model.ProveedorModel;
 import model.utilModel;
@@ -21,14 +22,14 @@ import java.util.ArrayList;
  * @author Edu
  */
 public class ProductoModel {
-    
+
     static boolean resultado=false;
     static String query="";
     static ConexionModel conexion;
     static utilModel utilidades;
     static ResultSet rs;
-    
-    public  boolean newProducto(ProductoBean productoData) throws SQLException 
+
+    public  boolean newProducto(ProductoBean productoData) throws SQLException
     {
         query = "insert into producto (producto.codigoProducto, producto.nombreProducto,producto.nivelUsoProducto,producto.descripcionProducto,producto.id_UnidadMedida) " +
                 "values (?,?,?,?,?);";
@@ -40,13 +41,13 @@ public class ProductoModel {
         ps.setString(4,productoData.getDescripcionProducto());
         ps.setInt(5,productoData.getId_EntradaProducto().getIdEntrada());
         System.out.println(ps.toString());
-        
+
         if (conexion.executeQuery(ps)) {
             return true;
         }
         return false;
     }
-    
+
     public  boolean updateProducto(ProductoBean productoBean) throws SQLException
     {
         query ="update producto set" +
@@ -62,14 +63,14 @@ public class ProductoModel {
         ps.setString(3,productoBean.getDescripcionProducto());
         ps.setInt(4,productoBean.getId_unidadMedida().getIdUnidadMedida());
         ps.setString(5,productoBean.getCodigoProducto());
-        
+
         if (conexion.executeQuery(ps)) {
             return true;
         }
         return false;
-        
+
     }
-    
+
     public  boolean deleteProducto(ProductoBean productoBean) throws SQLException
     {
         query = "UPDATE producto SET  where estadoProducto=? where codigoProducto = ?";
@@ -78,13 +79,13 @@ public class ProductoModel {
         ps.setInt(1, productoBean.getEstadoProducto());
         ps.setString(2, productoBean.getCodigoProducto());
         System.out.println(ps.toString());
-        
+
         if (conexion.executeQuery(ps)) {
             return true;
         }
         return false;
     }
-    
+
     public  JTable cargarTabla() throws SQLException
     {
         conexion = new ConexionModel();
@@ -99,9 +100,9 @@ public class ProductoModel {
         tablaResultado=utilidades.cargarTabla(columnas, rs);
         conexion.close();
         return tablaResultado;
-        
+
     }
-    
+
     public ComboBoxModel<UnidadMedidaBean> cargarComboUnidadMedida() throws SQLException{
         conexion = new ConexionModel();
         DefaultComboBoxModel<UnidadMedidaBean> modelo = new DefaultComboBoxModel<UnidadMedidaBean>();
@@ -111,7 +112,7 @@ public class ProductoModel {
         rs=conexion.getRs();
         ArrayList<UnidadMedidaBean>listadeMedidas = new ArrayList<UnidadMedidaBean>();
         while(rs.next()){
-          
+
             UnidadMedidaBean leido = new UnidadMedidaBean();
             leido.setIdUnidadMedida(rs.getInt(1));
             leido.setNombreUnidadMedida(rs.getString(2));
@@ -121,11 +122,11 @@ public class ProductoModel {
             modelo.addElement(obj);
             System.out.println(obj.toString());
         }
-        
-        
+
+
         return modelo;
     }
-    
+
     public  JTable cargarTablaBusqueda(ProductoBean productoBean) throws SQLException
     {
         utilidades = new utilModel();
@@ -139,9 +140,30 @@ public class ProductoModel {
                                          + "Entrada, Saldo,Estado,Saldo total"};
         tablaResultado=utilidades.cargarTabla(columnas, rs);
         conexion.close();
-                
-        
+
+
         return tablaResultado;
-        
+
     }
+
+    public ProductoBean getById(int idProducto) throws SQLException
+    {
+        ProductoBean objProducto = new ProductoBean();
+        query = "SELECT * FROM producto WHERE idProducto = ?";
+        conexion = new ConexionModel();
+        PreparedStatement ps = conexion.connect.prepareStatement(query);
+        ps.setInt(1, idProducto);
+        conexion.setRs(ps);
+        rs = conexion.getRs();
+        objProducto.setIdProducto(rs.getInt("idProducto"));
+        objProducto.setCodigoProducto(rs.getString("codigoProducto"));
+        objProducto.setNombreProducto(rs.getString("nombreProducto"));
+        objProducto.setDescripcionProducto(rs.getString("descripcionProducto"));
+        objProducto.setNivelUsoProducto(rs.getString("nivelUsoProducto"));
+        objProducto.setId_unidadMedida(new UnidadMedidaModel().getById(rs.getInt("id_UnidadMedida")));
+
+        return objProducto;
+    }
+
+    public static boolean newProducto(ProductoBean productoData) throws SQLException
 }
