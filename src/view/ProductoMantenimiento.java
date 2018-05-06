@@ -26,7 +26,7 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
     
     static int bandera=0;
     
-    public ProductoMantenimiento() {
+    public ProductoMantenimiento() throws SQLException {
         initComponents();  
         jTable1.setModel(controlador.cargarTabla().getModel());
     }
