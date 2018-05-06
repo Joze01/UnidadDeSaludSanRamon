@@ -5,6 +5,7 @@
  */
 package model;
 import entity.ProductoBean;
+import entity.UnidadMedidaBean;
 import model.ConexionModel;
 import model.ProveedorModel;
 import model.utilModel;
@@ -25,6 +26,25 @@ public class ProductoModel {
     static ConexionModel conexion;
     static utilModel utilidades;
     static ResultSet rs;
+    
+    public ProductoBean getById(int idProducto) throws SQLException
+    {
+        ProductoBean objProducto = new ProductoBean();
+        query = "SELECT * FROM producto WHERE idProducto = ?";
+        conexion = new ConexionModel();
+        PreparedStatement ps = conexion.connect.prepareStatement(query);
+        ps.setInt(1, idProducto);
+        conexion.setRs(ps);
+        rs = conexion.getRs();
+        objProducto.setIdProducto(rs.getInt("idProducto"));  
+        objProducto.setCodigoProducto(rs.getString("codigoProducto"));
+        objProducto.setNombreProducto(rs.getString("nombreProducto"));
+        objProducto.setDescripcionProducto(rs.getString("descripcionProducto"));
+        objProducto.setNivelUsoProducto(rs.getString("nivelUsoProducto"));
+        objProducto.setId_unidadMedida(new UnidadMedidaModel().getById(rs.getInt("id_UnidadMedida")));
+        
+        return objProducto;
+    }
     
     public static boolean newProducto(ProductoBean productoData) throws SQLException 
     {
