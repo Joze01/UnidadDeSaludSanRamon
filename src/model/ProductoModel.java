@@ -165,5 +165,4 @@ public class ProductoModel {
         return objProducto;
     }
 
-    public static boolean newProducto(ProductoBean productoData) throws SQLException
 }
