@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package view;
+import controller.productoController;
 import javax.swing.*;
 import model.ProductoModel;
 import entity.ProductoBean;
@@ -17,7 +18,8 @@ import javax.swing.table.DefaultTableModel;
  * @author antonio
  */
 public class ProductoMantenimiento extends javax.swing.JInternalFrame {
-
+    productoController controlador = new productoController();
+    ProductoBean producto;
     /**
      * Creates new form ProductoMantenimiento
      */
@@ -26,8 +28,9 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
     
     public ProductoMantenimiento() {
         initComponents();  
+        jTable1.setModel(controlador.cargarTabla().getModel());
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -303,12 +306,17 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
 
         try {
-            ProductoBean producto = new ProductoBean();
+            producto=new ProductoBean();
             producto.setCodigoProducto((txtCodigo.getText()));
             producto.setNombreProducto(txtNombre.getText());
             producto.setNivelUsoProducto(txtNivelUso.getText());
             producto.setDescripcionProducto(txtDescripcion.getText());
-            ProductoModel.newProducto(producto);
+            
+            if(controlador.newProducto(producto)){
+                JOptionPane.showMessageDialog(rootPane, "Completado");
+            }else{
+                 JOptionPane.showMessageDialog(rootPane, "Error");
+            }
         } catch (SQLException ex) {
             
             JOptionPane.showMessageDialog(null, ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
@@ -318,12 +326,16 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try
         {
-            ProductoBean producto = new ProductoBean();
+            producto = new ProductoBean();
             producto.setCodigoProducto(txtCodigo.getText());
             producto.setNombreProducto(txtNombre.getText());
             producto.setNivelUsoProducto(txtNivelUso.getText());
             producto.setDescripcionProducto(txtDescripcion.getText());
-            ProductoModel.updateProducto(producto);
+             if(controlador.updateProducto(producto)){
+                JOptionPane.showMessageDialog(rootPane, "Completado");
+            }else{
+                 JOptionPane.showMessageDialog(rootPane, "Error");
+            }
         }
         catch (SQLException ex)
         {
@@ -340,7 +352,11 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
             producto.setNombreProducto(txtNombre.getText());
             producto.setNivelUsoProducto(txtNivelUso.getText());
             producto.setDescripcionProducto(txtDescripcion.getText());
-            ProductoModel.elminarProducto(producto);
+             if(controlador.deleteProducto(producto)){
+                JOptionPane.showMessageDialog(rootPane, "Completado");
+            }else{
+                 JOptionPane.showMessageDialog(rootPane, "Error");
+            }
         }
         catch (SQLException ex)
         {
@@ -357,7 +373,7 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
     private void btnTodosRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTodosRegistrosActionPerformed
         try
         {
-            jTable1 = ProductoModel.cargarTabla();
+              jTable1.setModel(controlador.cargarTabla().getModel());
         }
         catch(SQLException ex)
         {
@@ -371,9 +387,9 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
         {
             ProductoBean producto = new ProductoBean();
             producto.setCodigoProducto(txtBusqueda.getText());
-            jTable1 = ProductoModel.cargarTablaBusqueda(producto);
+            //jTable1 = ProductoModel.cargarTablaBusqueda(producto);
         }
-        catch(SQLException ex)
+        catch(Exception ex)
         {
             JOptionPane.showMessageDialog(null, ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
         }
