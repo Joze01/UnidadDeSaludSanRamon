@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import entity.UnidadMedidaBean;
 
 /**
  *
@@ -29,6 +30,8 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
     public ProductoMantenimiento() throws SQLException {
         initComponents();  
         jTable1.setModel(controlador.cargarTabla().getModel());
+        
+        cmbUnidadMedida.setModel(controlador.cargarComboUnidadMedida());
     }
     
     /**
@@ -189,7 +192,12 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Medida");
 
-        cmbUnidadMedida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbUnidadMedida.setName(""); // NOI18N
+        cmbUnidadMedida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbUnidadMedidaActionPerformed(evt);
+            }
+        });
 
         btnIngresar.setText("Ingresar");
         btnIngresar.addActionListener(new java.awt.event.ActionListener() {
@@ -408,6 +416,13 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jTable1MousePressed
 
+    private void cmbUnidadMedidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbUnidadMedidaActionPerformed
+        // TODO add your handling code here:
+        System.out.println(cmbUnidadMedida.getSelectedItem().toString());
+        
+           
+    }//GEN-LAST:event_cmbUnidadMedidaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
@@ -416,7 +431,7 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnTodosRegistros;
-    private javax.swing.JComboBox<String> cmbUnidadMedida;
+    private javax.swing.JComboBox<UnidadMedidaBean> cmbUnidadMedida;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

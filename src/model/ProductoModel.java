@@ -13,6 +13,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
+import entity.UnidadMedidaBean;
+import java.util.ArrayList;
 
 /**
  *
@@ -85,6 +87,7 @@ public class ProductoModel {
     
     public  JTable cargarTabla() throws SQLException
     {
+        conexion = new ConexionModel();
         utilidades = new utilModel();
         JTable tablaResultado;
         query = "select * from producto";
@@ -95,10 +98,32 @@ public class ProductoModel {
                                          + "Entrada, Saldo,Estado,Saldo total"};
         tablaResultado=utilidades.cargarTabla(columnas, rs);
         conexion.close();
-                
-        
         return tablaResultado;
         
+    }
+    
+    public ComboBoxModel<UnidadMedidaBean> cargarComboUnidadMedida() throws SQLException{
+        conexion = new ConexionModel();
+        DefaultComboBoxModel<UnidadMedidaBean> modelo = new DefaultComboBoxModel<UnidadMedidaBean>();
+        query = "select idUnidadMedida, nombreUnidadMedida from unidadmedida";
+        PreparedStatement ps = conexion.connect.prepareStatement(query);
+        conexion.setRs(ps);
+        rs=conexion.getRs();
+        ArrayList<UnidadMedidaBean>listadeMedidas = new ArrayList<UnidadMedidaBean>();
+        while(rs.next()){
+          
+            UnidadMedidaBean leido = new UnidadMedidaBean();
+            leido.setIdUnidadMedida(rs.getInt(1));
+            leido.setNombreUnidadMedida(rs.getString(2));
+            listadeMedidas.add(leido);
+        }
+        for(UnidadMedidaBean obj:listadeMedidas){
+            modelo.addElement(obj);
+            System.out.println(obj.toString());
+        }
+        
+        
+        return modelo;
     }
     
     public  JTable cargarTablaBusqueda(ProductoBean productoBean) throws SQLException

@@ -6,8 +6,9 @@
 package controller;
 
 import entity.ProductoBean;
+import entity.UnidadMedidaBean;
 import java.sql.SQLException;
-import javax.swing.JTable;
+import javax.swing.*;
 import model.ProductoModel;
 
 /**
@@ -51,5 +52,13 @@ public class productoController {
     public JTable busqueda(ProductoBean productoData) throws SQLException{
         JTable tablacompleta = modelo.cargarTablaBusqueda(productoData);
         return  tablacompleta;
+    }
+    
+    public DefaultComboBoxModel<UnidadMedidaBean> cargarComboUnidadMedida() throws SQLException{
+        
+        DefaultComboBoxModel<UnidadMedidaBean> modeloCombo = new DefaultComboBoxModel<>();
+        modeloCombo = (DefaultComboBoxModel<UnidadMedidaBean>) modelo.cargarComboUnidadMedida();
+        
+        return modeloCombo;
     }
 }

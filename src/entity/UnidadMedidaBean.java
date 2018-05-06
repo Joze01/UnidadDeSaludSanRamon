@@ -70,4 +70,13 @@ public class UnidadMedidaBean {
     private String nombreUnidadMedida;
     private String descripcionUnidadMedida;
     private int estadoUnidadMedida;
+    
+    
+ 
+    
+    
+    @Override
+    public String toString() {
+        return this.nombreUnidadMedida;
+    }
 }

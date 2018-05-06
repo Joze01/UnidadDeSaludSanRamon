@@ -12,6 +12,20 @@ package entity;
 public class EntradaBean {
 
     /**
+     * @return the id_Lote
+     */
+    public LoteBean getId_Lote() {
+        return id_Lote;
+    }
+
+    /**
+     * @param id_Lote the id_Lote to set
+     */
+    public void setId_Lote(LoteBean id_Lote) {
+        this.id_Lote = id_Lote;
+    }
+
+    /**
      * @return the idEntrada
      */
     public int getIdEntrada() {
@@ -25,19 +39,6 @@ public class EntradaBean {
         this.idEntrada = idEntrada;
     }
 
-    /**
-     * @return the id_Lote
-     */
-    public int getId_Lote() {
-        return id_Lote;
-    }
-
-    /**
-     * @param id_Lote the id_Lote to set
-     */
-    public void setId_Lote(int id_Lote) {
-        this.id_Lote = id_Lote;
-    }
 
     /**
      * @return the id_Producto
@@ -97,7 +98,7 @@ public class EntradaBean {
 
    
     private int idEntrada;
-    private int id_Lote;
+    private LoteBean id_Lote;
     private ProductoBean id_Producto;
     private float cantidadEntrada;
     private float costoEntrada;
