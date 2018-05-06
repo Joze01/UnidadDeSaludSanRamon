@@ -233,10 +233,16 @@ public class mdiSanRamon extends javax.swing.JFrame {
     private void itemMedidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMedidasActionPerformed
         if(UnidadMedidaMantenimiento.bandera==0)
         {
-            UnidadMedidaMantenimiento mantenimientoMedida = new UnidadMedidaMantenimiento();
-            desktopPane.add(mantenimientoMedida);
+            UnidadMedidaMantenimiento mantenimientoMedida;
+            try {
+                mantenimientoMedida = new UnidadMedidaMantenimiento();
+                desktopPane.add(mantenimientoMedida);
             mantenimientoMedida.show();
             UnidadMedidaMantenimiento.bandera=1;
+            } catch (SQLException ex) {
+                Logger.getLogger(mdiSanRamon.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         }
     }//GEN-LAST:event_itemMedidasActionPerformed
 
