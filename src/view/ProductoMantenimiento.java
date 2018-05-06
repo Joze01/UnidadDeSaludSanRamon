@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package view;
+import controller.productoController;
 import javax.swing.*;
 import model.ProductoModel;
 import entity.ProductoBean;
@@ -11,23 +12,28 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import entity.UnidadMedidaBean;
 
 /**
  *
  * @author antonio
  */
 public class ProductoMantenimiento extends javax.swing.JInternalFrame {
-
+    productoController controlador = new productoController();
+    ProductoBean producto;
     /**
      * Creates new form ProductoMantenimiento
      */
     
     static int bandera=0;
     
-    public ProductoMantenimiento() {
+    public ProductoMantenimiento() throws SQLException {
         initComponents();  
+        jTable1.setModel(controlador.cargarTabla().getModel());
+        
+        cmbUnidadMedida.setModel(controlador.cargarComboUnidadMedida());
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -186,7 +192,12 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Medida");
 
-        cmbUnidadMedida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbUnidadMedida.setName(""); // NOI18N
+        cmbUnidadMedida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbUnidadMedidaActionPerformed(evt);
+            }
+        });
 
         btnIngresar.setText("Ingresar");
         btnIngresar.addActionListener(new java.awt.event.ActionListener() {
@@ -303,12 +314,17 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
 
         try {
-            ProductoBean producto = new ProductoBean();
+            producto=new ProductoBean();
             producto.setCodigoProducto((txtCodigo.getText()));
             producto.setNombreProducto(txtNombre.getText());
             producto.setNivelUsoProducto(txtNivelUso.getText());
             producto.setDescripcionProducto(txtDescripcion.getText());
-            ProductoModel.newProducto(producto);
+            
+            if(controlador.newProducto(producto)){
+                JOptionPane.showMessageDialog(rootPane, "Completado");
+            }else{
+                 JOptionPane.showMessageDialog(rootPane, "Error");
+            }
         } catch (SQLException ex) {
             
             JOptionPane.showMessageDialog(null, ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
@@ -318,12 +334,16 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try
         {
-            ProductoBean producto = new ProductoBean();
+            producto = new ProductoBean();
             producto.setCodigoProducto(txtCodigo.getText());
             producto.setNombreProducto(txtNombre.getText());
             producto.setNivelUsoProducto(txtNivelUso.getText());
             producto.setDescripcionProducto(txtDescripcion.getText());
-            ProductoModel.updateProducto(producto);
+             if(controlador.updateProducto(producto)){
+                JOptionPane.showMessageDialog(rootPane, "Completado");
+            }else{
+                 JOptionPane.showMessageDialog(rootPane, "Error");
+            }
         }
         catch (SQLException ex)
         {
@@ -340,7 +360,11 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
             producto.setNombreProducto(txtNombre.getText());
             producto.setNivelUsoProducto(txtNivelUso.getText());
             producto.setDescripcionProducto(txtDescripcion.getText());
-            ProductoModel.elminarProducto(producto);
+             if(controlador.deleteProducto(producto)){
+                JOptionPane.showMessageDialog(rootPane, "Completado");
+            }else{
+                 JOptionPane.showMessageDialog(rootPane, "Error");
+            }
         }
         catch (SQLException ex)
         {
@@ -357,7 +381,7 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
     private void btnTodosRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTodosRegistrosActionPerformed
         try
         {
-            jTable1 = ProductoModel.cargarTabla();
+              jTable1.setModel(controlador.cargarTabla().getModel());
         }
         catch(SQLException ex)
         {
@@ -371,9 +395,9 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
         {
             ProductoBean producto = new ProductoBean();
             producto.setCodigoProducto(txtBusqueda.getText());
-            jTable1 = ProductoModel.cargarTablaBusqueda(producto);
+            //jTable1 = ProductoModel.cargarTablaBusqueda(producto);
         }
-        catch(SQLException ex)
+        catch(Exception ex)
         {
             JOptionPane.showMessageDialog(null, ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
         }
@@ -392,6 +416,13 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jTable1MousePressed
 
+    private void cmbUnidadMedidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbUnidadMedidaActionPerformed
+        // TODO add your handling code here:
+        System.out.println(cmbUnidadMedida.getSelectedItem().toString());
+        
+           
+    }//GEN-LAST:event_cmbUnidadMedidaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
@@ -400,7 +431,7 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnTodosRegistros;
-    private javax.swing.JComboBox<String> cmbUnidadMedida;
+    private javax.swing.JComboBox<UnidadMedidaBean> cmbUnidadMedida;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
