@@ -19,6 +19,18 @@ public class UnidadMedidaMantenimiento extends javax.swing.JInternalFrame {
     
     public UnidadMedidaMantenimiento() {
         initComponents();
+
+        Object[][] data = null;
+        
+        String[] columns = 
+        {
+            
+            "ID","Nombre","Descripcion", "Estado"
+        };
+        
+        modelo1 = new DefaultTableModel(data, columns);
+        this.jTable2.setModel(modelo1);
+
     }
 
     /**
@@ -229,6 +241,167 @@ public class UnidadMedidaMantenimiento extends javax.swing.JInternalFrame {
     private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
         UnidadMedidaMantenimiento.bandera=0;
     }//GEN-LAST:event_formInternalFrameClosing
+
+
+    private void txtBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusquedaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBusquedaActionPerformed
+
+     private void generarListado() throws SQLException
+    {
+        resultado=conUM.getRs();
+        
+        while (resultado.next()) 
+        {
+            Object[] newRow=
+            {
+                resultado.getInt(1),resultado.getString(2),resultado.getString(3),resultado.getString(4)
+            };
+            modelo1.addRow(newRow);
+        }
+        
+        resultado.close();
+    }
+     private void limpiarMedida()
+     {
+         txtNombreUnidad.setText("");
+        txtDescripcion.setText("");
+        txtcode.setText("");
+     }
+    private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed
+        // TODO add your handling code here:
+        while(modelo1.getRowCount()!=0)
+        {
+            modelo1.removeRow(0);
+        }
+        String sql = "select * from unidadmedida where concat(nombreUnidadMedida,' ',descripcionUnidadMedida)"
+                 + "like '%" + this.txtBusqueda.getText()+"%'";
+        try {
+            PreparedStatement ps = conUM.connect.prepareStatement(sql);
+
+        
+            conUM.setRs(ps);
+           generarListado();
+        } catch (SQLException ex) {
+            Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txtBusquedaKeyPressed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+        modelo1.setRowCount(0);
+        limpiarMedida();
+        btnIngresar.setEnabled(true);
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnTodosRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTodosRegistrosActionPerformed
+        // TODO add your handling code here:
+        String sql = "select * from unidadmedida";
+        modelo1.setRowCount(0);
+        try {
+            PreparedStatement ps = conUM.connect.prepareStatement(sql);
+
+        
+            conUM.setRs(ps);
+           generarListado();
+        } catch (SQLException ex) {
+            Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnTodosRegistrosActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        if(txtNombreUnidad.getText().equals("")||txtDescripcion.getText().equals(""))
+        {
+            JOptionPane.showMessageDialog(this, "¡Debe llenar los campos vacios!","Alerta",JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+        String sql = "update unidadmedida set nombreUnidadMedida='"+txtNombreUnidad.getText()+"', descripcionUnidadMedida='"+txtDescripcion.getText()+"' WHERE idUnidadMedida="+txtcode.getText()+";";
+        try {
+
+            PreparedStatement ps = conUM.connect.prepareStatement(sql);
+
+            conUM.executeQuery(ps);
+
+            limpiarMedida();
+            btnIngresar.setEnabled(true);
+            actualizar();
+            } catch (SQLException ex) {
+                Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        String sql = "update unidadmedida set estadoUnidadMedida = 0 WHERE idUnidadMedida="+txtcode.getText()+";";
+        try {
+
+            PreparedStatement ps = conUM.connect.prepareStatement(sql);
+
+            conUM.executeQuery(ps);
+
+            limpiarMedida();
+            btnIngresar.setEnabled(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void txtNombreUnidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreUnidadKeyPressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_txtNombreUnidadKeyPressed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        // TODO add your handling code here:
+
+        int codigo =(Integer)jTable2.getValueAt(jTable2.getSelectedRow(), 0);
+        String nombre = (String)jTable2.getValueAt(jTable2.getSelectedRow(), 1);
+        String desc = (String)jTable2.getValueAt(jTable2.getSelectedRow(), 2);
+        txtNombreUnidad.setText(nombre);
+        txtDescripcion.setText(desc);
+        txtcode.setText(Integer.toString(codigo));
+        btnIngresar.setEnabled(false);
+    }//GEN-LAST:event_jTable2MouseClicked
+
+    private void actualizar()
+    {
+        String sql = "select * from unidadmedida";
+        modelo1.setRowCount(0);
+        try {
+            PreparedStatement ps = conUM.connect.prepareStatement(sql);
+
+        
+            conUM.setRs(ps);
+           generarListado();
+        } catch (SQLException ex) {
+            Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+        // TODO add your handling code here:
+        if(txtNombreUnidad.getText().equals("")||txtDescripcion.getText().equals(""))
+        {
+            JOptionPane.showMessageDialog(this, "¡Debe llenar los campos vacios!","Alerta",JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+        String sql = "insert into unidadmedida(nombreUnidadMedida, descripcionUnidadMedida) VALUES ('"+txtNombreUnidad.getText()+"','"+txtDescripcion.getText()+"')";
+        try {
+
+            PreparedStatement ps = conUM.connect.prepareStatement(sql);
+
+            conUM.executeQuery(ps);
+
+            limpiarMedida();
+            actualizar();
+        } catch (SQLException ex) {
+            Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+    }//GEN-LAST:event_btnIngresarActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

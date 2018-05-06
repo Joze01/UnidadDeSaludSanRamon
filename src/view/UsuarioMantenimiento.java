@@ -1,33 +1,69 @@
+package view;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.ConexionModel;
 
 /**
  *
  * @author antonio
  */
 public class UsuarioMantenimiento extends javax.swing.JInternalFrame {
-
+    ConexionModel conUM = new ConexionModel();
+    ResultSet resultado=null;
+    DefaultTableModel modelo1 = null;
     /**
      * Creates new form UsuarioMantenimiento
      */
     
     static int bandera = 0;
     
-    public UsuarioMantenimiento() {
+    public UsuarioMantenimiento() throws SQLException {
         initComponents();
+        Object[][] data = null;
+        
+        String[] columns = 
+        {
+            
+            "ID","Nombre","Usuario","Tipo Usuario","Estado"
+        };
+        
+        modelo1 = new DefaultTableModel(data, columns);
+        this.jTable1.setModel(modelo1);
     }
     
-    void limpiarTxt(){
-        txtNombre.setText("");
-        txtLogin.setText("");
-        txtPassword.setText("");
-        cmbTipoUsuario.setSelectedItem(null);
-    }
+    int verificaUsuario()
+    {
+        int v=0;
+        try {
+            String sql = "select loginUsuario from usuario";
+            PreparedStatement ps = conUM.connect.prepareStatement(sql);
+            conUM.setRs(ps);
+           resultado=conUM.getRs();
 
+        while (resultado.next()) 
+        {
+            if(resultado.getString("loginUsuario").equals(txtLogin.getText()))
+                v++;
+        }      
+        resultado.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return v;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,7 +85,6 @@ public class UsuarioMantenimiento extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtLogin = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -57,6 +92,9 @@ public class UsuarioMantenimiento extends javax.swing.JInternalFrame {
         btnIngresar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        txtcode = new javax.swing.JTextField();
+        txtLogin = new javax.swing.JTextField();
 
         setClosable(true);
         setTitle("Usuarios");
@@ -93,6 +131,11 @@ public class UsuarioMantenimiento extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         btnLimpiar.setText("Limpiar");
@@ -103,8 +146,19 @@ public class UsuarioMantenimiento extends javax.swing.JInternalFrame {
         });
 
         btnTodosRegistros.setText("Ver todo");
+        btnTodosRegistros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTodosRegistrosActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Registro a buscar");
+
+        txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBusquedaKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -136,8 +190,8 @@ public class UsuarioMantenimiento extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTodosRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -152,7 +206,7 @@ public class UsuarioMantenimiento extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Tipo");
 
-        cmbTipoUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbTipoUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione usuario", "Administrador", "Encargado" }));
 
         btnIngresar.setText("Ingresar");
         btnIngresar.addActionListener(new java.awt.event.ActionListener() {
@@ -175,6 +229,11 @@ public class UsuarioMantenimiento extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel5.setText("ID (Código)");
+        jLabel5.setToolTipText("");
+
+        txtcode.setEnabled(false);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -188,25 +247,31 @@ public class UsuarioMantenimiento extends javax.swing.JInternalFrame {
                         .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addGap(60, 60, 60)
-                            .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addGap(60, 60, 60)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addComponent(jLabel1)
                         .addGap(60, 60, 60)
-                        .addComponent(cmbTipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21))
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2))
                         .addGap(60, 60, 60)
-                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                            .addComponent(txtLogin))))
                 .addContainerGap(48, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addComponent(jLabel5)
+                .addGap(60, 60, 60)
+                .addComponent(txtcode, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(60, 60, 60)
+                .addComponent(cmbTipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(68, 68, 68))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,24 +280,28 @@ public class UsuarioMantenimiento extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addGap(18, 18, 18)
+                .addGap(28, 28, 28)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
+                .addGap(29, 29, 29)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(cmbTipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(cmbTipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(80, 80, 80)
+                    .addComponent(jLabel5)
+                    .addComponent(txtcode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -250,10 +319,12 @@ public class UsuarioMantenimiento extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(15, Short.MAX_VALUE))
+
+                .addContainerGap())
+
         );
 
         pack();
@@ -261,23 +332,220 @@ public class UsuarioMantenimiento extends javax.swing.JInternalFrame {
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         // TODO add your handling code here:
+        if(txtNombre.getText().equals("")||txtLogin.getText().equals("")||txtPassword.getText().equals(""))
+        {
+            JOptionPane.showMessageDialog(this, "¡Debe llenar los campos vacios!","Alerta",JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            if(cmbTipoUsuario.getSelectedIndex() == 0)
+            {
+                JOptionPane.showMessageDialog(this, "¡Seleccione el tipo de usuario!","Alerta",JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                if(verificaUsuario() >= 1)
+                {
+                    JOptionPane.showMessageDialog(this, "¡Nombre "+txtLogin.getText()+" Ya esta siendo utilizado!","Información",JOptionPane.INFORMATION_MESSAGE);
+                }
+                else{
+                String sql = "insert into usuario(nombreUsuario, loginUsuario, passwordUsuario, tipoUsuario) VALUES ('"+txtNombre.getText()+"','"+txtLogin.getText()+"','"+txtPassword.getText()+"',"+cmbTipoUsuario.getSelectedIndex()+")";
+                try {
+
+                    PreparedStatement ps = conUM.connect.prepareStatement(sql);
+
+                    conUM.executeQuery(ps);
+
+                    limpiarUsuario();
+                    actualizar();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                }
+            }
+        }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
+    private void actualizar()
+    {
+        String sql = "select * from usuario";
+        modelo1.setRowCount(0);
+        try {
+            PreparedStatement ps = conUM.connect.prepareStatement(sql);
+
+        
+            conUM.setRs(ps);
+           generarListado();
+        } catch (SQLException ex) {
+            Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    boolean modificaContra()
+    {
+        boolean b = false;
+        String contra = JOptionPane.showInputDialog(null,"¡Digite contraseña actual de "+txtLogin.getText()+"!","Confirmación",JOptionPane.INFORMATION_MESSAGE);
+        try {
+            String sql = "select passwordUsuario from usuario WHERE idUsuario="+txtcode.getText()+";";
+            PreparedStatement ps = conUM.connect.prepareStatement(sql);
+            conUM.setRs(ps);
+           resultado=conUM.getRs();
+
+        while (resultado.next()) 
+        {
+            if(resultado.getString("passwordUsuario").equals(contra))
+            {b=true;}
+        }      
+        resultado.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return b;
+    }
+    
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
+        String sql;
+        if(txtNombre.getText().equals(""))
+        {
+            JOptionPane.showMessageDialog(this, "¡Debe Digitar su nombre!","Alerta",JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            if(cmbTipoUsuario.getSelectedIndex() == 0)
+            {
+                JOptionPane.showMessageDialog(this, "¡Seleccione el tipo de usuario!","Información",JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                if(!txtPassword.getText().equals(""))
+                {
+                    sql = "update usuario set nombreUsuario='"+txtNombre.getText()+"', passwordUsuario='"+txtPassword.getText()+"', tipoUsuario="+cmbTipoUsuario.getSelectedIndex()+" WHERE idUsuario="+txtcode.getText()+";";
+                }
+                else{
+                    sql = "update usuario set nombreUsuario='"+txtNombre.getText()+"', tipoUsuario="+cmbTipoUsuario.getSelectedIndex()+" WHERE idUsuario="+txtcode.getText()+";";
+                }
+                if(modificaContra())
+                {
+                try {
+                        
+                        PreparedStatement ps = conUM.connect.prepareStatement(sql);
+
+                        conUM.executeQuery(ps);
+
+                        limpiarUsuario();
+                        txtLogin.setEnabled(true);
+                        btnIngresar.setEnabled(true);
+                        actualizar();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    JOptionPane.showMessageDialog(this, "¡Registro actualizado!","Confirmación",JOptionPane.INFORMATION_MESSAGE);
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "¡Contraseña incorrecta, actualización denegada!","Confirmación",JOptionPane.INFORMATION_MESSAGE);
+                }
+                
+            }
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
+    private void generarListado() throws SQLException
+    {
+        resultado=conUM.getRs();
+        
+        while (resultado.next()) 
+        {
+            Object[] newRow=
+            {
+                resultado.getInt(1),resultado.getString(2),resultado.getString(3),resultado.getString(5),resultado.getInt(6)
+            };
+            modelo1.addRow(newRow);
+        }
+        
+        resultado.close();
+    }
+    
+    private void limpiarUsuario()
+    {
+        txtNombre.setText("");
+        txtLogin.setText("");
+       cmbTipoUsuario.setSelectedIndex(0);
+        txtcode.setText("");
+        txtPassword.setText("");
+    }
+    
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
+         String sql = "update usuario set estadoUsuario = 0 WHERE idUsuario="+txtcode.getText()+";";
+        try {
+
+            PreparedStatement ps = conUM.connect.prepareStatement(sql);
+
+            conUM.executeQuery(ps);
+
+            limpiarUsuario();
+            txtLogin.setEnabled(true);
+            btnIngresar.setEnabled(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        limpiarTxt();
+        modelo1.setRowCount(0);
+        limpiarUsuario();
+        txtLogin.setEnabled(true);
+        btnIngresar.setEnabled(true);
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
         UsuarioMantenimiento.bandera=0;
     }//GEN-LAST:event_formInternalFrameClosing
+
+    private void btnTodosRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTodosRegistrosActionPerformed
+        // TODO add your handling code here:
+        String sql = "select * from usuario";
+        modelo1.setRowCount(0);
+        try {
+            PreparedStatement ps = conUM.connect.prepareStatement(sql);
+
+        
+            conUM.setRs(ps);
+           generarListado();
+        } catch (SQLException ex) {
+            Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnTodosRegistrosActionPerformed
+
+    private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed
+        // TODO add your handling code here:
+        while(modelo1.getRowCount()!=0)
+        {
+            modelo1.removeRow(0);
+        }
+        String sql = "select * from usuario where concat(nombreUsuario,' ',loginUsuario)"
+                 + "like '%" + this.txtBusqueda.getText()+"%'";
+        try {
+            PreparedStatement ps = conUM.connect.prepareStatement(sql);
+
+        
+            conUM.setRs(ps);
+           generarListado();
+        } catch (SQLException ex) {
+            Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txtBusquedaKeyPressed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int codigo =(Integer)jTable1.getValueAt(jTable1.getSelectedRow(), 0);
+        String nombre = (String)jTable1.getValueAt(jTable1.getSelectedRow(), 1);
+        String usuario = (String)jTable1.getValueAt(jTable1.getSelectedRow(), 2);
+        String tipo = (String)jTable1.getValueAt(jTable1.getSelectedRow(), 3);
+        txtNombre.setText(nombre);
+        txtLogin.setText(usuario);
+       cmbTipoUsuario.setSelectedIndex(Integer.parseInt(tipo));
+        txtcode.setText(Integer.toString(codigo));
+        txtLogin.setEnabled(false);
+        btnIngresar.setEnabled(false);
+    }//GEN-LAST:event_jTable1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -291,6 +559,7 @@ public class UsuarioMantenimiento extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -301,5 +570,6 @@ public class UsuarioMantenimiento extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtLogin;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPassword;
+    private javax.swing.JTextField txtcode;
     // End of variables declaration//GEN-END:variables
 }

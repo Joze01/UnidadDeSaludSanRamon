@@ -5,6 +5,13 @@
  */
 package view;
 
+
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
+
 /**
  *
  * @author antonio
@@ -160,10 +167,16 @@ public class mdiSanRamon extends javax.swing.JFrame {
     private void itemUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemUsuariosActionPerformed
         if(UsuarioMantenimiento.bandera==0)
         {
-            UsuarioMantenimiento mantenimientoUsuario = new UsuarioMantenimiento();
-            desktopPane.add(mantenimientoUsuario);
-            mantenimientoUsuario.show();
-            UsuarioMantenimiento.bandera=1;
+            UsuarioMantenimiento mantenimientoUsuario;
+            try {
+                mantenimientoUsuario = new UsuarioMantenimiento();
+                desktopPane.add(mantenimientoUsuario);
+                mantenimientoUsuario.show();
+                UsuarioMantenimiento.bandera=1;
+            } catch (SQLException ex) {
+                Logger.getLogger(mdiSanRamon.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         }
     }//GEN-LAST:event_itemUsuariosActionPerformed
 
