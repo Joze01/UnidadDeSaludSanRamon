@@ -40,9 +40,9 @@ public class ProductoModel {
         ps.setString(2,productoData.getNombreProducto());
         ps.setString(3,productoData.getNivelUsoProducto());
         ps.setString(4,productoData.getDescripcionProducto());
-        ps.setInt(5,productoData.getId_EntradaProducto().getIdEntrada());
+        ps.setInt(5, productoData.getId_unidadMedida().getIdUnidadMedida());
+       
         
-
         if (conexion.executeQuery(ps)) {
             return true;
         }
@@ -64,7 +64,7 @@ public class ProductoModel {
         ps.setString(3,productoBean.getDescripcionProducto());
         ps.setInt(4,productoBean.getId_unidadMedida().getIdUnidadMedida());
         ps.setString(5,productoBean.getCodigoProducto());
-
+        
         if (conexion.executeQuery(ps)) {
             return true;
         }
@@ -74,7 +74,7 @@ public class ProductoModel {
 
     public  boolean deleteProducto(ProductoBean productoBean) throws SQLException
     {
-        query = "UPDATE producto SET  where estadoProducto=? where codigoProducto = ?";
+        query = "UPDATE producto SET estadoProducto=? where codigoProducto = ?";
         conexion = new ConexionModel();
         PreparedStatement ps = conexion.connect.prepareStatement(query);
         ps.setInt(1, productoBean.getEstadoProducto());
@@ -92,12 +92,11 @@ public class ProductoModel {
         conexion = new ConexionModel();
         utilidades = new utilModel();
         JTable tablaResultado;
-        query = "select * from producto";
+        query = "select p.idProducto, p.codigoProducto, p.nombreProducto, p.descripcionProducto, p.nivelUsoProducto, um.nombreUnidadMedida from producto as p inner join unidadMedida as um on um.idUnidadMedida=p.id_UnidadMedida";
         PreparedStatement ps = conexion.connect.prepareStatement(query);
         conexion.setRs(ps);
         rs=conexion.getRs();
-        String[] columnas = new String[]{"#","Codigo","Nombre","Descripcion,Nivel Uso, Unidad de Medida, "
-                                         + "Entrada, Saldo,Estado,Saldo total"};
+        String[] columnas = new String[]{"#","Codigo","Nombre","Descripcion","Nivel Uso", "Unidad de Medida"};
         tablaResultado=utilidades.cargarTabla(columnas, rs);
         conexion.close();
         return tablaResultado;
