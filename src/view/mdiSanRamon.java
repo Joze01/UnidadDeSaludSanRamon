@@ -23,6 +23,7 @@ public class mdiSanRamon extends javax.swing.JFrame {
      */
     public mdiSanRamon() {
         initComponents();
+        
         this.setLocationRelativeTo(null);
         this.setExtendedState(this.MAXIMIZED_BOTH);
     }
@@ -254,23 +255,11 @@ public class mdiSanRamon extends javax.swing.JFrame {
     }//GEN-LAST:event_itemMedidasActionPerformed
 
     private void itemEntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEntradasActionPerformed
-        if(EntradaMantenimiento.bandera==0)
-        {
-            EntradaMantenimiento mantenimientoEntrada = new EntradaMantenimiento();
-            desktopPane.add(mantenimientoEntrada);
-            mantenimientoEntrada.show();
-            EntradaMantenimiento.bandera=1;
-        }
+
     }//GEN-LAST:event_itemEntradasActionPerformed
 
     private void itemSalidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSalidasActionPerformed
-        if(SalidaMantenimiento.bandera==0)
-        {
-            SalidaMantenimiento mantenimientoSalida = new SalidaMantenimiento();
-            desktopPane.add(mantenimientoSalida);
-            mantenimientoSalida.show();
-            SalidaMantenimiento.bandera=1;
-        }
+
     }//GEN-LAST:event_itemSalidasActionPerformed
 
     private void itemLotesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemLotesActionPerformed

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package model;
+import entity.EntradaBean;
 import entity.ProductoBean;
 import entity.UnidadMedidaBean;
 import model.ConexionModel;
@@ -40,7 +41,7 @@ public class ProductoModel {
         ps.setString(3,productoData.getNivelUsoProducto());
         ps.setString(4,productoData.getDescripcionProducto());
         ps.setInt(5,productoData.getId_EntradaProducto().getIdEntrada());
-        System.out.println(ps.toString());
+        
 
         if (conexion.executeQuery(ps)) {
             return true;
@@ -146,23 +147,48 @@ public class ProductoModel {
 
     }
 
-    public ProductoBean getById(int idProducto) throws SQLException
+    public ProductoBean getProductoBeanById(int idProducto) throws SQLException
     {
-        ProductoBean objProducto = new ProductoBean();
+        ProductoBean objProducto = null;
+        EntradaBean entrada = new EntradaBean();
         query = "SELECT * FROM producto WHERE idProducto = ?";
         conexion = new ConexionModel();
         PreparedStatement ps = conexion.connect.prepareStatement(query);
         ps.setInt(1, idProducto);
         conexion.setRs(ps);
         rs = conexion.getRs();
+        while(rs.next()){
+        objProducto = new ProductoBean();
         objProducto.setIdProducto(rs.getInt("idProducto"));
         objProducto.setCodigoProducto(rs.getString("codigoProducto"));
         objProducto.setNombreProducto(rs.getString("nombreProducto"));
         objProducto.setDescripcionProducto(rs.getString("descripcionProducto"));
         objProducto.setNivelUsoProducto(rs.getString("nivelUsoProducto"));
-        objProducto.setId_unidadMedida(new UnidadMedidaModel().getById(rs.getInt("id_UnidadMedida")));
-
+        objProducto.setId_unidadMedida(new UnidadMedidaModel().getUnidadMedidaById(rs.getInt("id_UnidadMedida")));
+        objProducto.setEstadoProducto(rs.getInt("estadoProducto"));
+        entrada.setIdEntrada(rs.getInt("Id_EntradaProducto"));
+        objProducto.setId_EntradaProducto(entrada);
+        objProducto.setSaldoEntradaProducto(rs.getFloat("saldoEntradaProducto"));
+        }
         return objProducto;
     }
+    
+    public boolean updateBandera(EntradaBean entrada) throws SQLException{
+        query = "UPDATE producto SET Id_EntradaProducto=?, saldoEntradaProducto=? where idProducto=?";
+        conexion = new ConexionModel();
+        PreparedStatement ps = conexion.connect.prepareStatement(query);
+        ps.setInt(1, entrada.getIdEntrada());
+        ps.setFloat(2, entrada.getCantidadEntrada());
+        ps.setInt(3, entrada.getId_Producto().getIdProducto());
+        System.out.println(ps.toString());
+        return conexion.executeQuery(ps);
+    }
+        /*
+           public ProductoBean getBandera(ProductoBean producto) throws SQLException{
+            query = "SELECT idProducto, Id_EntradaProducto, saldoEntradaProducto, saldoTotalProducto FROM producto WHERE 1";
+            conexion = new ConexionModel();
+            return conexion.executeQuery(ps);
+        }
+        */
 
 }

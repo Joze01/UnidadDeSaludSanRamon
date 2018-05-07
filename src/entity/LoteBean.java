@@ -5,6 +5,8 @@
  */
 package entity;
 
+import java.util.Date;
+
 /**
  *
  * @author Jose
@@ -39,37 +41,40 @@ public class LoteBean {
         this.codigoLote = codigoLote;
     }
 
+
+   
+    private int idLote;
+    private String codigoLote;
+    private Date fechaEntradaLote;
+    private ProveedorBean id_proveedor;
+
     /**
      * @return the fechaEntradaLote
      */
-    public String getFechaEntradaLote() {
+    public Date getFechaEntradaLote() {
         return fechaEntradaLote;
     }
 
     /**
      * @param fechaEntradaLote the fechaEntradaLote to set
      */
-    public void setFechaEntradaLote(String fechaEntradaLote) {
+    public void setFechaEntradaLote(Date fechaEntradaLote) {
         this.fechaEntradaLote = fechaEntradaLote;
     }
 
     /**
      * @return the id_proveedor
      */
-    public int getId_proveedor() {
+    public ProveedorBean getId_proveedor() {
         return id_proveedor;
     }
 
     /**
      * @param id_proveedor the id_proveedor to set
      */
-    public void setId_proveedor(int id_proveedor) {
+    public void setId_proveedor(ProveedorBean id_proveedor) {
         this.id_proveedor = id_proveedor;
     }
-    private int idLote;
-    private String codigoLote;
-    private String fechaEntradaLote;
-    private int id_proveedor;
     
    
 }
