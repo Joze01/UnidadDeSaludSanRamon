@@ -5,10 +5,19 @@
  */
 package view;
 
+import com.sun.org.apache.bcel.internal.generic.SALOAD;
+import controller.productoController;
+import entity.ProductoBean;
+import entity.RecetaBean;
 import entity.SalidaBean;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import model.ProductoModel;
 import model.RecetaModel;
 import model.SalidaModel;
@@ -18,6 +27,10 @@ import model.SalidaModel;
  * @author antonio
  */
 public class RecetaMantenimiento extends javax.swing.JInternalFrame {
+    productoController controladorProducto = new productoController();
+    ProductoBean objeProducto;
+    RecetaBean objeReceta;
+    List<SalidaBean> listaSalidas = new ArrayList<SalidaBean>();
 
     /**
      * Creates new form RecetaMantenimiento
@@ -25,8 +38,9 @@ public class RecetaMantenimiento extends javax.swing.JInternalFrame {
     
     static int bandera=0;
     
-    public RecetaMantenimiento() {
+    public RecetaMantenimiento() throws SQLException{
         initComponents();
+        tblTodosProductos.setModel(controladorProducto.cargarTabla().getModel());
     }
 
     /**
@@ -40,14 +54,18 @@ public class RecetaMantenimiento extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        txtFechaEntrega = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblTodosProductos = new javax.swing.JTable();
+        btnCrearReceta = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtCantidad = new javax.swing.JTextField();
+        btnAgregar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblReceta = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        btnEntregarReceta = new javax.swing.JButton();
+        btnReiniciar = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Recetas");
@@ -69,85 +87,160 @@ public class RecetaMantenimiento extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel1.setText("Codigo");
+        jLabel1.setText("Código");
 
-        jLabel2.setText("Fecha de entrega");
+        tblTodosProductos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        jButton1.setText("Ingresar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            },
+            new String [] {
+                "Código", "Nombre", "Descripción", "Nivel de Uso", "Unidad de Medida"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblTodosProductos.setEnabled(false);
+        tblTodosProductos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblTodosProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTodosProductosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblTodosProductos);
+        if (tblTodosProductos.getColumnModel().getColumnCount() > 0) {
+            tblTodosProductos.getColumnModel().getColumn(0).setResizable(false);
+            tblTodosProductos.getColumnModel().getColumn(1).setResizable(false);
+            tblTodosProductos.getColumnModel().getColumn(2).setResizable(false);
+            tblTodosProductos.getColumnModel().getColumn(3).setResizable(false);
+            tblTodosProductos.getColumnModel().getColumn(4).setResizable(false);
+        }
+
+        btnCrearReceta.setText("Iniciar Entrega");
+        btnCrearReceta.setRequestFocusEnabled(false);
+        btnCrearReceta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCrearRecetaActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Modificar");
+        jLabel2.setText("Seleccione el producto a entregar");
 
-        jButton3.setText("Eliminar");
+        jLabel3.setText("Cantidad");
 
-        jButton4.setText("Limpiar");
+        txtCantidad.setEnabled(false);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        btnAgregar.setText("Agregar");
+        btnAgregar.setEnabled(false);
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
+
+        tblReceta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Producto", "Cantidad"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblReceta.setEnabled(false);
+        jScrollPane2.setViewportView(tblReceta);
+        if (tblReceta.getColumnModel().getColumnCount() > 0) {
+            tblReceta.getColumnModel().getColumn(0).setResizable(false);
+            tblReceta.getColumnModel().getColumn(1).setResizable(false);
+        }
+
+        jLabel4.setText("Productos de la receta");
+
+        btnEntregarReceta.setText("Finalizar y Entregar");
+        btnEntregarReceta.setEnabled(false);
+        btnEntregarReceta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntregarRecetaActionPerformed(evt);
+            }
+        });
+
+        btnReiniciar.setText("Reiniciar");
+        btnReiniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReiniciarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(102, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(42, 42, 42)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtCodigo)
-                    .addComponent(txtFechaEntrega, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE))
-                .addContainerGap(102, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 151, Short.MAX_VALUE)
+                        .addComponent(btnCrearReceta))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAgregar))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel4))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnReiniciar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEntregarReceta)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addGap(18, 18, 18)
-                .addComponent(jButton3)
-                .addGap(18, 18, 18)
-                .addComponent(jButton4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCrearReceta))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtFechaEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabel3)
+                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAgregar))
+                .addGap(15, 15, 15)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                .addContainerGap())
+                    .addComponent(btnEntregarReceta)
+                    .addComponent(btnReiniciar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -157,33 +250,141 @@ public class RecetaMantenimiento extends javax.swing.JInternalFrame {
         RecetaMantenimiento.bandera=0;
     }//GEN-LAST:event_formInternalFrameClosing
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // Este es el agregar
-        try {
-            System.out.println("SALIDAAAAAAAAAAAAAA");
-            SalidaBean objeSalida = new SalidaBean();
-            objeSalida.setCantidadSalida(60);
-            objeSalida.setTipoSalida(1);
-            objeSalida.setId_receta(new RecetaModel().getRecetaById(1));
-            objeSalida.setId_vale(null);
-            objeSalida.setId_producto(new ProductoModel().getProductoBeanById(2));
-            new SalidaModel().newSalida(objeSalida);
-        } catch (SQLException ex) {
-            Logger.getLogger(RecetaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+    private void tblTodosProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTodosProductosMouseClicked
+        // TODO add your handling code here:
+        if(tblTodosProductos.getSelectedRow()>=0)
+        {
+            try
+            {
+                int id= Integer.valueOf(tblTodosProductos.getModel().getValueAt(tblTodosProductos.getSelectedRow(), 0).toString());
+                objeProducto = new ProductoModel().getProductoBeanById(id);
+                txtCantidad.setEnabled(true);
+                btnAgregar.setEnabled(true);
+            }
+            catch(SQLException ex)
+            {
+                JOptionPane.showMessageDialog(this, "¡Ocurrió un error! " + ex.getMessage());
+            }
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+        
+        
+    }//GEN-LAST:event_tblTodosProductosMouseClicked
 
+    
+    
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+        try
+        {
+            float cantidad = Float.parseFloat(txtCantidad.getText());
+            SalidaBean objeSalida = new SalidaBean();
+            objeSalida.setId_producto(objeProducto);
+            objeSalida.setCantidadSalida(Float.parseFloat(txtCantidad.getText()));
+            objeSalida.setTipoSalida(1);
+            objeSalida.setId_receta(objeReceta);
+            objeSalida.setId_vale(null);
+            listaSalidas.add(objeSalida);
+            txtCantidad.setEnabled(false);
+            btnAgregar.setEnabled(false);
+            txtCantidad.setText(null);
+            recargarTabla();
+        }
+        catch(Exception err)
+        {
+            JOptionPane.showMessageDialog(this, "Valor no válido");
+        }
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    
+    private void btnCrearRecetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearRecetaActionPerformed
+        // TODO add your handling code here:
+        if(txtCodigo.getText().trim().equals(""))
+        {
+            JOptionPane.showMessageDialog(this, "Campo vacío");
+        }
+        else
+        try
+        {
+            objeReceta= new RecetaBean();
+            objeReceta.setFechaEntrega(new Date());
+            objeReceta.setCodigoReceta(txtCodigo.getText());
+            new RecetaModel().newReceta(objeReceta);
+            objeReceta = new RecetaModel().getLastReceta();
+            
+            //Habilitando y deshabilitando
+            txtCodigo.setEnabled(false);
+            btnCrearReceta.setEnabled(false);
+            
+            tblReceta.setEnabled(true);
+            tblTodosProductos.setEnabled(true);
+        }
+        catch(SQLException ex)
+        {
+            JOptionPane.showMessageDialog(this, "Error");
+        }
+        
+    }//GEN-LAST:event_btnCrearRecetaActionPerformed
+
+    private void btnEntregarRecetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregarRecetaActionPerformed
+        // TODO add your handling code here:
+        try
+        {
+            for(SalidaBean objeto : listaSalidas)
+            {
+                JOptionPane.showMessageDialog(this, objeto.getId_producto().getNombreProducto());
+                new SalidaModel().newSalida(objeto);
+                btnEntregarReceta.setEnabled(false);
+                JOptionPane.showMessageDialog(this, "Receta entregada exitosamente");
+            }
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(this, "Error" + ex.getMessage());
+        }
+    }//GEN-LAST:event_btnEntregarRecetaActionPerformed
+
+    private void btnReiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReiniciarActionPerformed
+        // TODO add your handling code here:
+        controladorProducto = new productoController();
+        objeProducto = null;
+        objeReceta=null;
+        List<SalidaBean> listaSalidas = new ArrayList<SalidaBean>();
+        txtCodigo.setEnabled(true);
+        btnCrearReceta.setEnabled(true);
+        tblReceta.setEnabled(false);
+        tblTodosProductos.setEnabled(false);
+        txtCantidad.setEnabled(false);
+        btnAgregar.setEnabled(false);
+        btnEntregarReceta.setEnabled(false);
+    }//GEN-LAST:event_btnReiniciarActionPerformed
+
+    void recargarTabla()
+    {
+        tblReceta.removeAll();
+        DefaultTableModel model = (DefaultTableModel) tblReceta.getModel();
+        model.setRowCount(0);
+        for(SalidaBean objeto : listaSalidas)
+        {
+            model.addRow(new Object[]{objeto.getId_producto().getNombreProducto(),objeto.getCantidadSalida()});
+        }
+        btnEntregarReceta.setEnabled(listaSalidas.size()!=0);
+            
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnCrearReceta;
+    private javax.swing.JButton btnEntregarReceta;
+    private javax.swing.JButton btnReiniciar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tblReceta;
+    private javax.swing.JTable tblTodosProductos;
+    private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtFechaEntrega;
     // End of variables declaration//GEN-END:variables
 }

@@ -6,7 +6,10 @@
 package view;
 
 
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -21,12 +24,16 @@ public class mdiSanRamon extends javax.swing.JFrame {
     /**
      * Creates new form mdiSanRamon
      */
+    
+    
+    
+    
     public mdiSanRamon() {
         initComponents();
-        
         this.setLocationRelativeTo(null);
         this.setExtendedState(this.MAXIMIZED_BOTH);
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -149,6 +156,8 @@ public class mdiSanRamon extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+   
+    
     private void itemUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemUsuariosActionPerformed
         if(UsuarioMantenimiento.bandera==0)
         {
@@ -188,10 +197,17 @@ public class mdiSanRamon extends javax.swing.JFrame {
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         if(RecetaMantenimiento.bandera==0)
         {
-            RecetaMantenimiento mantenimientoReceta = new RecetaMantenimiento();
-            desktopPane.add(mantenimientoReceta);
-            mantenimientoReceta.show();
-            RecetaMantenimiento.bandera=1;
+            try
+            {
+                RecetaMantenimiento mantenimientoReceta = new RecetaMantenimiento();
+                desktopPane.add(mantenimientoReceta);
+                mantenimientoReceta.show();
+                RecetaMantenimiento.bandera=1;
+            }
+            catch(SQLException ex)
+            {
+                JOptionPane.showMessageDialog(jMenu1, "Error");
+            }
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 

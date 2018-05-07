@@ -22,6 +22,23 @@ public class RecetaModel {
     static utilModel utilidades;
     static ResultSet rs;
     
+    public RecetaBean getLastReceta() throws SQLException{
+        
+        RecetaBean objeReceta = null;
+        query = "SELECT * FROM receta ORDER BY idReceta DESC LIMIT 1";
+        conexion = new ConexionModel();
+        PreparedStatement ps = conexion.connect.prepareStatement(query);
+        conexion.setRs(ps);
+        rs = conexion.getRs();
+        if(rs.next()){
+            objeReceta = new RecetaBean();
+            objeReceta.setIdReceta(rs.getInt("idReceta"));
+            objeReceta.setCodigoReceta(rs.getString("codigoReceta"));
+            objeReceta.setFechaEntrega(rs.getDate("fechaEntrega"));
+        }
+        return objeReceta;
+    }
+    
     public RecetaBean getRecetaById(int idReceta) throws SQLException{
         
         RecetaBean objeReceta = null;
@@ -38,5 +55,19 @@ public class RecetaModel {
             objeReceta.setFechaEntrega(rs.getDate("fechaEntrega"));
         }
         return objeReceta;
+    }
+    
+    public Boolean newReceta(RecetaBean objeReceta) throws SQLException
+    {
+        resultado = false;
+        query = "INSERT INTO receta(codigoReceta, fechaEntrega) VALUES (?,?)";
+        conexion = new ConexionModel();
+        PreparedStatement ps = conexion.connect.prepareStatement(query);
+        ps.setString(1, objeReceta.getCodigoReceta());
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String myDate = sdf.format(objeReceta.getFechaEntrega());
+        ps.setString(2, myDate);
+        System.out.println(ps.toString());
+        return conexion.executeQuery(ps);
     }
 }

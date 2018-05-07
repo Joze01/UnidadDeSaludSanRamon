@@ -65,6 +65,7 @@ public class SalidaModel {
             objeProducto.setSaldoEntradaProducto(objeProducto.getSaldoEntradaProducto()-salidaData.getCantidadSalida());
             EntradaBean objeEntrada = new EntradaModel().getEntradaById(objeProducto.getId_EntradaProducto().getIdEntrada());
             objeEntrada.setCantidadEntrada(objeProducto.getSaldoEntradaProducto());
+            objeEntrada.setId_Producto(objeProducto);
             new ProductoModel().updateBandera(objeEntrada);
         }
         else

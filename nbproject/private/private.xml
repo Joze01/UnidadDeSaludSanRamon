@@ -3,27 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Jose/Documents/NetBeansProjects/San%20Ramon/UnidadDeSaludSanRamon/src/view/mdiSanRamon.java</file>
-            <file>file:/C:/Users/Jose/Documents/NetBeansProjects/San%20Ramon/UnidadDeSaludSanRamon/src/view/ProductoMantenimiento.java</file>
-            <file>file:/C:/Users/Jose/Documents/NetBeansProjects/San%20Ramon/UnidadDeSaludSanRamon/src/view/SalidaMantenimiento.java</file>
-            <file>file:/C:/Users/Jose/Documents/NetBeansProjects/San%20Ramon/UnidadDeSaludSanRamon/src/view/Login.java</file>
-            <file>file:/C:/Users/Jose/Documents/NetBeansProjects/San%20Ramon/UnidadDeSaludSanRamon/src/controller/ProveedorController.java</file>
-            <file>file:/C:/Users/Jose/Documents/NetBeansProjects/San%20Ramon/UnidadDeSaludSanRamon/src/controller/DestinatarioController.java</file>
-            <file>file:/C:/Users/Jose/Documents/NetBeansProjects/San%20Ramon/UnidadDeSaludSanRamon/src/entity/EntradaBean.java</file>
-            <file>file:/C:/Users/Jose/Documents/NetBeansProjects/San%20Ramon/UnidadDeSaludSanRamon/src/entity/ProductoBean.java</file>
-            <file>file:/C:/Users/Jose/Documents/NetBeansProjects/San%20Ramon/UnidadDeSaludSanRamon/src/view/RecetaMantenimiento.java</file>
-            <file>file:/C:/Users/Jose/Documents/NetBeansProjects/San%20Ramon/UnidadDeSaludSanRamon/src/model/ProductoModel.java</file>
-            <file>file:/C:/Users/Jose/Documents/NetBeansProjects/San%20Ramon/UnidadDeSaludSanRamon/src/entity/UnidadMedidaBean.java</file>
-            <file>file:/C:/Users/Jose/Documents/NetBeansProjects/San%20Ramon/UnidadDeSaludSanRamon/src/model/LoginModel.java</file>
-            <file>file:/C:/Users/Jose/Documents/NetBeansProjects/San%20Ramon/UnidadDeSaludSanRamon/src/model/ProveedorModel.java</file>
-            <file>file:/C:/Users/Jose/Documents/NetBeansProjects/San%20Ramon/UnidadDeSaludSanRamon/src/assent/sanramon%20(1).sql</file>
-            <file>file:/C:/Users/Jose/Documents/NetBeansProjects/San%20Ramon/UnidadDeSaludSanRamon/src/model/ConexionModel.java</file>
-            <file>file:/C:/Users/Jose/Documents/NetBeansProjects/San%20Ramon/UnidadDeSaludSanRamon/src/view/ProveedorMantenimiento.java</file>
-            <file>file:/C:/Users/Jose/Documents/NetBeansProjects/San%20Ramon/UnidadDeSaludSanRamon/src/view/LoteMantenimiento.java</file>
-            <file>file:/C:/Users/Jose/Documents/NetBeansProjects/San%20Ramon/UnidadDeSaludSanRamon/src/view/UsuarioMantenimiento.java</file>
-            <file>file:/C:/Users/Jose/Documents/NetBeansProjects/San%20Ramon/UnidadDeSaludSanRamon/src/view/ValeMantenimiento.java</file>
-            <file>file:/C:/Users/Jose/Documents/NetBeansProjects/San%20Ramon/UnidadDeSaludSanRamon/src/model/utilModel.java</file>
-            <file>file:/C:/Users/Jose/Documents/NetBeansProjects/San%20Ramon/UnidadDeSaludSanRamon/src/view/UnidadMedidaMantenimiento.java</file>
+            <file>file:/C:/Users/alvin/Documents/NetBeansProjects/UnidadDeSaludSanRamon/src/view/RecetaMantenimiento.java</file>
         </group>
     </open-files>
 </project-private>
