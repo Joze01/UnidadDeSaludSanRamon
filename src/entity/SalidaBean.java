@@ -102,5 +102,14 @@ public class SalidaBean {
     private int tipoSalida;
     private RecetaBean id_receta;
     private ValeBean id_vale;
+    private ProductoBean id_producto;
+
+    public ProductoBean getId_producto() {
+        return id_producto;
+    }
+
+    public void setId_producto(ProductoBean id_producto) {
+        this.id_producto = id_producto;
+    }
     
 }

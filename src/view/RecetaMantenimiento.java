@@ -5,6 +5,14 @@
  */
 package view;
 
+import entity.SalidaBean;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.ProductoModel;
+import model.RecetaModel;
+import model.SalidaModel;
+
 /**
  *
  * @author antonio
@@ -150,7 +158,19 @@ public class RecetaMantenimiento extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formInternalFrameClosing
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // Este es el agregar
+        try {
+            System.out.println("SALIDAAAAAAAAAAAAAA");
+            SalidaBean objeSalida = new SalidaBean();
+            objeSalida.setCantidadSalida(60);
+            objeSalida.setTipoSalida(1);
+            objeSalida.setId_receta(new RecetaModel().getRecetaById(1));
+            objeSalida.setId_vale(null);
+            objeSalida.setId_producto(new ProductoModel().getProductoBeanById(2));
+            new SalidaModel().newSalida(objeSalida);
+        } catch (SQLException ex) {
+            Logger.getLogger(RecetaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
