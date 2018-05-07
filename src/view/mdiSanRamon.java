@@ -49,8 +49,6 @@ public class mdiSanRamon extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         itemProductos = new javax.swing.JMenuItem();
         itemMedidas = new javax.swing.JMenuItem();
-        itemEntradas = new javax.swing.JMenuItem();
-        itemSalidas = new javax.swing.JMenuItem();
         itemLotes = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -124,22 +122,6 @@ public class mdiSanRamon extends javax.swing.JFrame {
             }
         });
         jMenu2.add(itemMedidas);
-
-        itemEntradas.setText("Entradas");
-        itemEntradas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemEntradasActionPerformed(evt);
-            }
-        });
-        jMenu2.add(itemEntradas);
-
-        itemSalidas.setText("Salidas");
-        itemSalidas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemSalidasActionPerformed(evt);
-            }
-        });
-        jMenu2.add(itemSalidas);
 
         itemLotes.setText("Lotes");
         itemLotes.addActionListener(new java.awt.event.ActionListener() {
@@ -254,14 +236,6 @@ public class mdiSanRamon extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_itemMedidasActionPerformed
 
-    private void itemEntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEntradasActionPerformed
-
-    }//GEN-LAST:event_itemEntradasActionPerformed
-
-    private void itemSalidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSalidasActionPerformed
-
-    }//GEN-LAST:event_itemSalidasActionPerformed
-
     private void itemLotesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemLotesActionPerformed
         if(LoteMantenimiento.bandera==0)
         {
@@ -310,13 +284,11 @@ public class mdiSanRamon extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu fileMenu;
-    private javax.swing.JMenuItem itemEntradas;
     private javax.swing.JMenuItem itemLotes;
     private javax.swing.JMenuItem itemMedidas;
     private javax.swing.JMenuItem itemProductos;
     private javax.swing.JMenuItem itemProveedores;
     private javax.swing.JMenuItem itemRecetas;
-    private javax.swing.JMenuItem itemSalidas;
     private javax.swing.JMenuItem itemUsuarios;
     private javax.swing.JMenuItem itemVales;
     private javax.swing.JMenu jMenu1;

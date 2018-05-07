@@ -119,4 +119,28 @@ public class EntradaModel {
     return entradaRespuesta;
     }
     
+    public EntradaBean getNextEntrada(EntradaBean currentEntrada) throws SQLException
+    {
+        EntradaBean objeEntrada = null;
+        
+        query = "select * from entrada where entrada.idEntrada>? and entrada.id_Producto = ? order by entrada.idEntrada asc limit 1";
+        conexion = new ConexionModel();
+        PreparedStatement ps = conexion.connect.prepareStatement(query);
+        ps.setInt(1, currentEntrada.getIdEntrada());
+        ps.setInt(2, currentEntrada.getId_Producto().getIdProducto());
+        conexion.setRs(ps);
+        rs = conexion.getRs();
+        
+        while(rs.next()){
+            objeEntrada=new EntradaBean();
+            objeEntrada.setIdEntrada(rs.getInt(1));
+            objeEntrada.setId_Lote(new LoteModel().getLoteById(rs.getInt(2)));
+            objeEntrada.setId_Producto(new ProductoModel().getProductoBeanById(rs.getInt("id_Producto")));
+            objeEntrada.setCantidadEntrada(rs.getFloat(4));
+            objeEntrada.setCostoEntrada(rs.getFloat(5));
+        }
+        
+        return objeEntrada;
+    }
+    
 }

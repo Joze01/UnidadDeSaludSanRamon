@@ -27,7 +27,7 @@ public class LoteModel {
     public LoteBean getLoteById(int Idlote) throws SQLException{
         
         ProveedorModel proveedormodel = new ProveedorModel();
-        LoteBean nuevoLote = new LoteBean();
+        LoteBean nuevoLote = null;
         query = "SELECT * FROM lote WHERE idLote = ?";
         conexion = new ConexionModel();
         PreparedStatement ps = conexion.connect.prepareStatement(query);
@@ -35,6 +35,7 @@ public class LoteModel {
         conexion.setRs(ps);
         rs = conexion.getRs();
         if(rs.next()){
+            nuevoLote = new LoteBean();
             nuevoLote.setIdLote(Idlote);
             nuevoLote.setCodigoLote(rs.getString(2));
             nuevoLote.setFechaEntradaLote(rs.getDate(3));
