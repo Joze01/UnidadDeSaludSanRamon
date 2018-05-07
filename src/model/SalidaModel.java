@@ -72,25 +72,33 @@ public class SalidaModel {
             float cantidadRestante = salidaData.getCantidadSalida();
             while(cantidadRestante>0)
             {
-                if(salidaData.getCantidadSalida()>objeProducto.getSaldoEntradaProducto())
+                System.out.println("Cantidad Restante " +cantidadRestante);
+                System.out.println("Saldo Producto " +objeProducto.getSaldoEntradaProducto() + " ENTRADA " + objeProducto.getId_EntradaProducto().getIdEntrada());
+                if(cantidadRestante>objeProducto.getSaldoEntradaProducto())
                 {
                     cantidadRestante-=objeProducto.getSaldoEntradaProducto();
-                    objeProducto.setSaldoEntradaProducto(0);
                     EntradaBean objeEntrada = new EntradaModel().getEntradaById(objeProducto.getId_EntradaProducto().getIdEntrada());
                     objeEntrada.setCantidadEntrada(objeProducto.getSaldoEntradaProducto());
                     salidaData.setId_Entrada(new EntradaModel().getEntradaById(objeProducto.getId_EntradaProducto().getIdEntrada()));
                     salidaData.setCantidadSalida(objeProducto.getSaldoEntradaProducto());
                     insertSalida(salidaData);
                     objeEntrada = new EntradaModel().getNextEntrada(objeEntrada);
+                    System.out.println("NEXT ID ENTRADA " + objeEntrada.getIdEntrada());
+                    objeProducto.setId_EntradaProducto(objeEntrada);
+                    objeProducto.setSaldoEntradaProducto(objeEntrada.getCantidadEntrada());
                     new ProductoModel().updateBandera(objeEntrada);
                 }
                 else
                 {
+                    salidaData.setCantidadSalida(cantidadRestante);
                     salidaData.setId_Entrada(new EntradaModel().getEntradaById(objeProducto.getId_EntradaProducto().getIdEntrada()));
                     insertSalida(salidaData);
                     objeProducto.setSaldoEntradaProducto(objeProducto.getSaldoEntradaProducto()-cantidadRestante);
+                    System.out.println("pupu" + objeProducto.getSaldoEntradaProducto());
                     EntradaBean objeEntrada = new EntradaModel().getEntradaById(objeProducto.getId_EntradaProducto().getIdEntrada());
                     objeEntrada.setCantidadEntrada(objeProducto.getSaldoEntradaProducto());
+                    objeEntrada.setIdEntrada(objeProducto.getId_EntradaProducto().getIdEntrada());
+                    System.out.println("SALDO ENTRADA BANDERA " +objeEntrada.getCantidadEntrada() );
                     new ProductoModel().updateBandera(objeEntrada);
                     cantidadRestante=0;
                 }

@@ -160,8 +160,9 @@ public class RecetaMantenimiento extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // Este es el agregar
         try {
+            System.out.println("SALIDAAAAAAAAAAAAAA");
             SalidaBean objeSalida = new SalidaBean();
-            objeSalida.setCantidadSalida(35);
+            objeSalida.setCantidadSalida(60);
             objeSalida.setTipoSalida(1);
             objeSalida.setId_receta(new RecetaModel().getRecetaById(1));
             objeSalida.setId_vale(null);
