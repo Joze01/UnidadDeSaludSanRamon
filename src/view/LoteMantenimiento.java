@@ -5,6 +5,15 @@
  */
 package view;
 
+import controller.entradaController;
+import entity.EntradaBean;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.LoteModel;
+import model.ProductoModel;
+
 /**
  *
  * @author antonio
@@ -16,7 +25,7 @@ public class LoteMantenimiento extends javax.swing.JInternalFrame {
      */
     
     static int bandera = 0;
-    
+    entradaController controlador ;
     public LoteMantenimiento() {
         initComponents();
     }
@@ -32,8 +41,6 @@ public class LoteMantenimiento extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        txtFechaEntrada = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         cmbProveedor = new javax.swing.JComboBox<>();
         btnIngresar = new javax.swing.JButton();
@@ -64,8 +71,6 @@ public class LoteMantenimiento extends javax.swing.JInternalFrame {
         });
 
         jLabel1.setText("Codigo");
-
-        jLabel2.setText("Fecha de entrada");
 
         jLabel3.setText("Proveedor");
 
@@ -109,15 +114,13 @@ public class LoteMantenimiento extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(72, 72, 72)
+                                .addGap(107, 107, 107)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel3)
-                                    .addComponent(jLabel2)
                                     .addComponent(jLabel1))
                                 .addGap(31, 31, 31)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtFechaEntrada, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(cmbProveedor, javax.swing.GroupLayout.Alignment.TRAILING, 0, 130, Short.MAX_VALUE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(51, 51, 51)
@@ -138,22 +141,18 @@ public class LoteMantenimiento extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtFechaEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnIngresar)
                     .addComponent(btnModificar)
                     .addComponent(btnEliminar)
                     .addComponent(btnLimpiar))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -166,6 +165,29 @@ public class LoteMantenimiento extends javax.swing.JInternalFrame {
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         // TODO add your handling code here:
+        LoteModel modeloLote = new LoteModel();
+        ProductoModel modeloProducto = new ProductoModel();
+        EntradaBean entradaData = new EntradaBean();
+        controlador=new entradaController();
+        
+        try {
+            entradaData.setId_Lote(modeloLote.getLoteById(1));
+            entradaData.setId_Producto(modeloProducto.getProductoBeanById(2));
+            entradaData.setCantidadEntrada(100);
+            entradaData.setCostoEntrada(100);
+            java.util.Date dt = new java.util.Date();
+            entradaData.setFechaVencimientoEntrada(dt);
+            controlador.newEntrada(entradaData);
+        } catch (SQLException ex) {
+            Logger.getLogger(LoteMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        
+        
+        
+        
     }//GEN-LAST:event_btnIngresarActionPerformed
 
 
@@ -176,11 +198,9 @@ public class LoteMantenimiento extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnModificar;
     private javax.swing.JComboBox<String> cmbProveedor;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtFechaEntrada;
     // End of variables declaration//GEN-END:variables
 }

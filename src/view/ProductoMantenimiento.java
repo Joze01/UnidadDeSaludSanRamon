@@ -319,7 +319,7 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
             producto.setNombreProducto(txtNombre.getText());
             producto.setNivelUsoProducto(txtNivelUso.getText());
             producto.setDescripcionProducto(txtDescripcion.getText());
-            
+            producto.setId_unidadMedida((UnidadMedidaBean) cmbUnidadMedida.getSelectedItem());
             if(controlador.newProducto(producto)){
                 JOptionPane.showMessageDialog(rootPane, "Completado");
             }else{

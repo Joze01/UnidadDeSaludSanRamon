@@ -5,12 +5,14 @@
  */
 package model;
 
+import entity.LoteBean;
 import entity.ProveedorBean;
 import javax.swing.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
+import static model.LoteModel.query;
 
 /**
  *
@@ -101,4 +103,26 @@ public class ProveedorModel {
 
         return tablaResultado;
     }
+    
+        public ProveedorBean getProveedorById(int idProveedor) throws SQLException{
+        ProveedorBean nuevoProveedor = new ProveedorBean();
+        query = "SELECT * FROM proveedor WHERE idProveedor = ?";
+        conexion = new ConexionModel();
+        PreparedStatement ps = conexion.connect.prepareStatement(query);
+        ps.setInt(1, idProveedor);
+        conexion.setRs(ps);
+        rs = conexion.getRs();
+        if(rs.next()){
+           nuevoProveedor.setIdProveedor(rs.getInt(1));
+           nuevoProveedor.setNombreProveedor(rs.getString(2));
+           nuevoProveedor.setDescripcionProveedor(rs.getString(3));
+           nuevoProveedor.setEstadoProveedor(rs.getInt(4));
+        }
+        return nuevoProveedor;
+        
+    }
+    
+    
+    
+    
 }
