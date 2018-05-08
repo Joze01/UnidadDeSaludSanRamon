@@ -276,18 +276,23 @@ public class RecetaMantenimiento extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         try
         {
+            SalidaModel modelosalidas = new SalidaModel();
+            
+            
             float cantidad = Float.parseFloat(txtCantidad.getText());
             SalidaBean objeSalida = new SalidaBean();
             objeSalida.setId_producto(objeProducto);
             objeSalida.setCantidadSalida(Float.parseFloat(txtCantidad.getText()));
-            objeSalida.setTipoSalida(1);
-            objeSalida.setId_receta(objeReceta);
-            objeSalida.setId_vale(null);
+            objeSalida.setTipoSalida(1); ///AQUI ESTA EL TIPO
+            objeSalida.setId_receta(objeReceta);  //NULL
+            objeSalida.setId_vale(null);//PASAR EL VALE
+            if(modelosalidas.isSuficente(objeSalida)){
             listaSalidas.add(objeSalida);
             txtCantidad.setEnabled(false);
             btnAgregar.setEnabled(false);
             txtCantidad.setText(null);
             recargarTabla();
+            }
         }
         catch(Exception err)
         {

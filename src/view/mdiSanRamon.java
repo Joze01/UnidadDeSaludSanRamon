@@ -214,10 +214,14 @@ public class mdiSanRamon extends javax.swing.JFrame {
     private void itemValesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemValesActionPerformed
         if(ValeMantenimiento.bandera==0)
         {
-            ValeMantenimiento mantenimientoVale = new ValeMantenimiento();
-            desktopPane.add(mantenimientoVale);
-            mantenimientoVale.show();
-            ValeMantenimiento.bandera=1;
+            try {
+                ValeMantenimiento mantenimientoVale = new ValeMantenimiento();
+                desktopPane.add(mantenimientoVale);
+                mantenimientoVale.show();
+                ValeMantenimiento.bandera=1;
+            } catch (SQLException ex) {
+                Logger.getLogger(mdiSanRamon.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_itemValesActionPerformed
 

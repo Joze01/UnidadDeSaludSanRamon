@@ -159,7 +159,7 @@ public class SalidaModel {
         return true;
         }
         System.out.println("NO ALCANZAN");
-        JOptionPane.showMessageDialog(null, "NO HAY SUFIENTES PRODUCTOS");
+        JOptionPane.showMessageDialog(null, "NO HAY SUFICIENTES PRODUCTOS");
         return false;
     }
 
