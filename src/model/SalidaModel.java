@@ -56,7 +56,7 @@ public class SalidaModel {
 
     public boolean newSalida(SalidaBean salidaData) throws SQLException {   
         resultado = false;
-        
+        if(isSuficente(salidaData)){
         ProductoBean objeProducto = new ProductoModel().getProductoBeanById(salidaData.getId_producto().getIdProducto());
         if(objeProducto.getSaldoEntradaProducto()>=salidaData.getCantidadSalida())
         {
@@ -118,6 +118,8 @@ public class SalidaModel {
         ps.setInt(5, salidaData.getId_vale().getIdVale());
         return conexion.executeQuery(ps);*/
         return true;
+        }
+        return false;
     }
 
 
@@ -157,6 +159,7 @@ public class SalidaModel {
         return true;
         }
         System.out.println("NO ALCANZAN");
+        JOptionPane.showMessageDialog(null, "NO HAY SUFIENTES PRODUCTOS");
         return false;
     }
 

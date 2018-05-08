@@ -331,7 +331,7 @@ public class RecetaMantenimiento extends javax.swing.JInternalFrame {
         {
             for(SalidaBean objeto : listaSalidas)
             {
-                JOptionPane.showMessageDialog(this, objeto.getId_producto().getNombreProducto());
+               
                 new SalidaModel().newSalida(objeto);
                 btnEntregarReceta.setEnabled(false);
                 JOptionPane.showMessageDialog(this, "Receta entregada exitosamente");
