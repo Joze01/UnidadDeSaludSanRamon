@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 06, 2018 at 04:59 AM
--- Server version: 10.1.30-MariaDB
--- PHP Version: 7.0.27
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 08-05-2018 a las 06:01:39
+-- Versión del servidor: 10.1.30-MariaDB
+-- Versión de PHP: 7.2.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,13 +19,15 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `sanramon`
+-- Base de datos: `sanramon`
 --
+CREATE DATABASE IF NOT EXISTS `sanramon` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `sanramon`;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `destinatario`
+-- Estructura de tabla para la tabla `destinatario`
 --
 
 CREATE TABLE `destinatario` (
@@ -35,10 +37,17 @@ CREATE TABLE `destinatario` (
   `estadoDestinatario` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `destinatario`
+--
+
+INSERT INTO `destinatario` (`idDestinatario`, `nombreDestinatario`, `descripcionDestinatario`, `estadoDestinatario`) VALUES
+(1, 'Destinatario', 'Destinatarito', 1);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `entrada`
+-- Estructura de tabla para la tabla `entrada`
 --
 
 CREATE TABLE `entrada` (
@@ -50,10 +59,20 @@ CREATE TABLE `entrada` (
   `fechaVencimientoEntrada` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `entrada`
+--
+
+INSERT INTO `entrada` (`idEntrada`, `id_Lote`, `id_Producto`, `cantidadEntrada`, `costoEntrada`, `fechaVencimientoEntrada`) VALUES
+(1, 1, 2, 50, 100, '2018-05-06 19:59:29'),
+(2, 1, 2, 25, 100, '2018-05-06 19:59:29'),
+(3, 1, 2, 100, 100, '2018-05-06 19:59:29'),
+(4, 1, 3, 100, 100, '2018-05-06 19:59:29');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `lote`
+-- Estructura de tabla para la tabla `lote`
 --
 
 CREATE TABLE `lote` (
@@ -63,10 +82,17 @@ CREATE TABLE `lote` (
   `id_proveedor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `lote`
+--
+
+INSERT INTO `lote` (`idLote`, `codigoLote`, `fechaEntradaLote`, `id_proveedor`) VALUES
+(1, 'Lote1', '2018-05-05', 4);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `producto`
+-- Estructura de tabla para la tabla `producto`
 --
 
 CREATE TABLE `producto` (
@@ -76,16 +102,24 @@ CREATE TABLE `producto` (
   `descripcionProducto` varchar(50) NOT NULL,
   `nivelUsoProducto` varchar(10) NOT NULL,
   `id_UnidadMedida` int(11) NOT NULL,
-  `Id_EntradaProducto` int(11) NOT NULL,
+  `Id_EntradaProducto` int(11) DEFAULT NULL,
   `saldoEntradaProducto` float NOT NULL,
   `estadoProducto` int(11) NOT NULL,
   `saldoTotalProducto` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `producto`
+--
+
+INSERT INTO `producto` (`idProducto`, `codigoProducto`, `nombreProducto`, `descripcionProducto`, `nivelUsoProducto`, `id_UnidadMedida`, `Id_EntradaProducto`, `saldoEntradaProducto`, `estadoProducto`, `saldoTotalProducto`) VALUES
+(2, 'PUP', 'Pupusas', 'Son ricas', 'PU', 1, 1, 25, 1, 0),
+(3, 'GAS', 'GASEOSAS', 'GASEOSAS', 'GAS', 1, 4, 50, 1, 0);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `proveedor`
+-- Estructura de tabla para la tabla `proveedor`
 --
 
 CREATE TABLE `proveedor` (
@@ -96,18 +130,19 @@ CREATE TABLE `proveedor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `proveedor`
+-- Volcado de datos para la tabla `proveedor`
 --
 
 INSERT INTO `proveedor` (`idProveedor`, `nombreProveedor`, `descripcionProveedor`, `estadoproveedor`) VALUES
 (1, 'prove', 'proveed', 0),
 (2, 'prove', 'proveed', 1),
-(3, 'proveedor3', 'descripcion3', 1);
+(3, 'proveedor3', 'descripcion3', 0),
+(4, 'Nuevo proveedor', 'Nuevito', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `receta`
+-- Estructura de tabla para la tabla `receta`
 --
 
 CREATE TABLE `receta` (
@@ -116,10 +151,35 @@ CREATE TABLE `receta` (
   `fechaEntrega` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `receta`
+--
+
+INSERT INTO `receta` (`idReceta`, `codigoReceta`, `fechaEntrega`) VALUES
+(1, 'Codigo', '2018-05-06'),
+(7, 'ds', '2018-05-07'),
+(8, 'sdd', '2018-05-07'),
+(9, 'Alvin', '2018-05-07'),
+(10, 'ds', '2018-05-07'),
+(11, 'fs', '2018-05-07'),
+(12, 'sd', '2018-05-07'),
+(13, 'codigo', '2018-05-07'),
+(14, 'MiReceta', '2018-05-07'),
+(15, '34', '2018-05-07'),
+(16, '23', '2018-05-07'),
+(17, 'sd', '2018-05-07'),
+(18, 'sd', '2018-05-07'),
+(19, 'A VER', '2018-05-07'),
+(20, 'AVC', '2018-05-07'),
+(21, 'asd', '2018-05-07'),
+(22, '23', '2018-05-07'),
+(23, 'rep', '2018-05-07'),
+(24, 'Vendedeo', '2018-05-07');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `salida`
+-- Estructura de tabla para la tabla `salida`
 --
 
 CREATE TABLE `salida` (
@@ -127,15 +187,32 @@ CREATE TABLE `salida` (
   `id_entrada` int(11) NOT NULL,
   `cantidadSalida` float NOT NULL,
   `tipoSalida` int(11) NOT NULL,
-  `id_receta` int(11) NOT NULL,
-  `id_vale` int(11) NOT NULL,
+  `id_receta` int(11) DEFAULT NULL,
+  `id_vale` int(11) DEFAULT NULL,
   `fechaSalida` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `salida`
+--
+
+INSERT INTO `salida` (`idSalida`, `id_entrada`, `cantidadSalida`, `tipoSalida`, `id_receta`, `id_vale`, `fechaSalida`) VALUES
+(87, 1, 50, 1, 1, NULL, '2018-05-06 21:29:38'),
+(88, 2, 10, 1, 1, NULL, '2018-05-06 21:29:39'),
+(89, 2, 15, 1, 1, NULL, '2018-05-06 21:29:41'),
+(90, 3, 45, 1, 1, NULL, '2018-05-06 21:29:42'),
+(91, 3, 15, 1, 9, NULL, '2018-05-07 14:44:11'),
+(92, 3, 10, 1, 9, NULL, '2018-05-07 14:44:11'),
+(93, 3, 12, 1, 12, NULL, '2018-05-07 14:48:54'),
+(94, 3, 32, 1, 12, NULL, '2018-05-07 14:48:55'),
+(95, 1, 25, 1, 13, NULL, '2018-05-07 14:50:17'),
+(96, 4, 25, 1, 13, NULL, '2018-05-07 14:50:17'),
+(97, 4, 25, 1, 24, NULL, '2018-05-07 21:52:35');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `unidadmedida`
+-- Estructura de tabla para la tabla `unidadmedida`
 --
 
 CREATE TABLE `unidadmedida` (
@@ -145,10 +222,18 @@ CREATE TABLE `unidadmedida` (
   `estadoUnidadMedida` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `unidadmedida`
+--
+
+INSERT INTO `unidadmedida` (`idUnidadMedida`, `nombreUnidadMedida`, `descripcionUnidadMedida`, `estadoUnidadMedida`) VALUES
+(1, 'Unidad ', 'Es una', 1),
+(2, 'Cientos', 'Cientos', 1);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuario`
+-- Estructura de tabla para la tabla `usuario`
 --
 
 CREATE TABLE `usuario` (
@@ -163,7 +248,7 @@ CREATE TABLE `usuario` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `vale`
+-- Estructura de tabla para la tabla `vale`
 --
 
 CREATE TABLE `vale` (
@@ -174,17 +259,17 @@ CREATE TABLE `vale` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Indexes for dumped tables
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `destinatario`
+-- Indices de la tabla `destinatario`
 --
 ALTER TABLE `destinatario`
   ADD PRIMARY KEY (`idDestinatario`);
 
 --
--- Indexes for table `entrada`
+-- Indices de la tabla `entrada`
 --
 ALTER TABLE `entrada`
   ADD PRIMARY KEY (`idEntrada`),
@@ -192,14 +277,14 @@ ALTER TABLE `entrada`
   ADD KEY `f_entrada_lote` (`id_Lote`);
 
 --
--- Indexes for table `lote`
+-- Indices de la tabla `lote`
 --
 ALTER TABLE `lote`
   ADD PRIMARY KEY (`idLote`),
   ADD KEY `f_lote_proveedor` (`id_proveedor`);
 
 --
--- Indexes for table `producto`
+-- Indices de la tabla `producto`
 --
 ALTER TABLE `producto`
   ADD PRIMARY KEY (`idProducto`),
@@ -207,19 +292,19 @@ ALTER TABLE `producto`
   ADD KEY `Id_EntradaProducto` (`Id_EntradaProducto`);
 
 --
--- Indexes for table `proveedor`
+-- Indices de la tabla `proveedor`
 --
 ALTER TABLE `proveedor`
   ADD PRIMARY KEY (`idProveedor`);
 
 --
--- Indexes for table `receta`
+-- Indices de la tabla `receta`
 --
 ALTER TABLE `receta`
   ADD PRIMARY KEY (`idReceta`);
 
 --
--- Indexes for table `salida`
+-- Indices de la tabla `salida`
 --
 ALTER TABLE `salida`
   ADD PRIMARY KEY (`idSalida`),
@@ -228,114 +313,114 @@ ALTER TABLE `salida`
   ADD KEY `f_salida_vale` (`id_vale`);
 
 --
--- Indexes for table `unidadmedida`
+-- Indices de la tabla `unidadmedida`
 --
 ALTER TABLE `unidadmedida`
   ADD PRIMARY KEY (`idUnidadMedida`);
 
 --
--- Indexes for table `usuario`
+-- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`idUsuario`);
 
 --
--- Indexes for table `vale`
+-- Indices de la tabla `vale`
 --
 ALTER TABLE `vale`
   ADD PRIMARY KEY (`idVale`),
   ADD KEY `f_vale_destinatario` (`id_destinatario`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `destinatario`
+-- AUTO_INCREMENT de la tabla `destinatario`
 --
 ALTER TABLE `destinatario`
-  MODIFY `idDestinatario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idDestinatario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `entrada`
+-- AUTO_INCREMENT de la tabla `entrada`
 --
 ALTER TABLE `entrada`
-  MODIFY `idEntrada` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idEntrada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `lote`
+-- AUTO_INCREMENT de la tabla `lote`
 --
 ALTER TABLE `lote`
-  MODIFY `idLote` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idLote` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `producto`
+-- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `proveedor`
+-- AUTO_INCREMENT de la tabla `proveedor`
 --
 ALTER TABLE `proveedor`
-  MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `receta`
+-- AUTO_INCREMENT de la tabla `receta`
 --
 ALTER TABLE `receta`
-  MODIFY `idReceta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idReceta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT for table `salida`
+-- AUTO_INCREMENT de la tabla `salida`
 --
 ALTER TABLE `salida`
-  MODIFY `idSalida` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idSalida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
--- AUTO_INCREMENT for table `unidadmedida`
+-- AUTO_INCREMENT de la tabla `unidadmedida`
 --
 ALTER TABLE `unidadmedida`
-  MODIFY `idUnidadMedida` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idUnidadMedida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `usuario`
+-- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
   MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `vale`
+-- AUTO_INCREMENT de la tabla `vale`
 --
 ALTER TABLE `vale`
   MODIFY `idVale` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Constraints for dumped tables
+-- Restricciones para tablas volcadas
 --
 
 --
--- Constraints for table `entrada`
+-- Filtros para la tabla `entrada`
 --
 ALTER TABLE `entrada`
   ADD CONSTRAINT `f_entrada_lote` FOREIGN KEY (`id_Lote`) REFERENCES `lote` (`idLote`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `f_entrada_producto` FOREIGN KEY (`id_Producto`) REFERENCES `producto` (`idProducto`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `lote`
+-- Filtros para la tabla `lote`
 --
 ALTER TABLE `lote`
   ADD CONSTRAINT `f_lote_proveedor` FOREIGN KEY (`id_proveedor`) REFERENCES `proveedor` (`idProveedor`);
 
 --
--- Constraints for table `producto`
+-- Filtros para la tabla `producto`
 --
 ALTER TABLE `producto`
   ADD CONSTRAINT `f_producto_entrada` FOREIGN KEY (`Id_EntradaProducto`) REFERENCES `entrada` (`idEntrada`),
   ADD CONSTRAINT `f_unidadMedida_producto` FOREIGN KEY (`id_UnidadMedida`) REFERENCES `unidadmedida` (`idUnidadMedida`);
 
 --
--- Constraints for table `salida`
+-- Filtros para la tabla `salida`
 --
 ALTER TABLE `salida`
   ADD CONSTRAINT `f_salida_entrada` FOREIGN KEY (`id_entrada`) REFERENCES `entrada` (`idEntrada`),
@@ -343,7 +428,7 @@ ALTER TABLE `salida`
   ADD CONSTRAINT `f_salida_vale` FOREIGN KEY (`id_vale`) REFERENCES `vale` (`idVale`);
 
 --
--- Constraints for table `vale`
+-- Filtros para la tabla `vale`
 --
 ALTER TABLE `vale`
   ADD CONSTRAINT `f_vale_destinatario` FOREIGN KEY (`id_destinatario`) REFERENCES `destinatario` (`idDestinatario`);

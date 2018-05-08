@@ -5,11 +5,27 @@
  */
 package entity;
 
+import java.util.Date;
+
 /**
  *
  * @author Jose
  */
 public class RecetaBean {
+
+    /**
+     * @return the fechaEntrega
+     */
+    public Date getFechaEntrega() {
+        return fechaEntrega;
+    }
+
+    /**
+     * @param fechaEntrega the fechaEntrega to set
+     */
+    public void setFechaEntrega(Date fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
+    }
 
     /**
      * @return the IdReceta
@@ -39,20 +55,8 @@ public class RecetaBean {
         this.codigoReceta = codigoReceta;
     }
 
-    /**
-     * @return the fechaEntrega
-     */
-    public String getFechaEntrega() {
-        return fechaEntrega;
-    }
 
-    /**
-     * @param fechaEntrega the fechaEntrega to set
-     */
-    public void setFechaEntrega(String fechaEntrega) {
-        this.fechaEntrega = fechaEntrega;
-    }
     private int IdReceta;
     private String codigoReceta;
-    private String fechaEntrega;
+    private Date fechaEntrega;
 }

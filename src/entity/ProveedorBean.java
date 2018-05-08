@@ -70,4 +70,9 @@ public class ProveedorBean {
     private String nombreProveedor;
     private String descripcionProveedor;
     private int estadoProveedor;
+    
+    @Override
+    public String toString() {
+        return this.nombreProveedor;
+    }
 }

@@ -22,19 +22,22 @@ public class UnidadMedidaModel {
     static utilModel utilidades;
     static ResultSet rs;
     
-    public UnidadMedidaBean getById(int idUnidadMedida) throws SQLException
+    public UnidadMedidaBean getUnidadMedidaById(int idUnidadMedida) throws SQLException
     {
-        UnidadMedidaBean objUnidadMedida = new UnidadMedidaBean();
+        UnidadMedidaBean objUnidadMedida =null;
         query = "SELECT * FROM unidadmedida WHERE idUnidadMedida = ?";
         conexion = new ConexionModel();
         PreparedStatement ps = conexion.connect.prepareStatement(query);
         ps.setInt(1, idUnidadMedida);
         conexion.setRs(ps);
         rs = conexion.getRs();
+        while(rs.next()){
+            objUnidadMedida= new UnidadMedidaBean();
         objUnidadMedida.setIdUnidadMedida(rs.getInt("idUnidadMedida"));  
         objUnidadMedida.setNombreUnidadMedida(  rs.getString("nombreUnidadMedida"));
         objUnidadMedida.setDescripcionUnidadMedida(rs.getString("descripcionUnidadMedida"));
         objUnidadMedida.setEstadoUnidadMedida(rs.getInt("estadoUnidadMedida"));
+        }
         return objUnidadMedida;
     }
 }
