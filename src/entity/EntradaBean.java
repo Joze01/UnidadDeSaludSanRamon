@@ -105,7 +105,21 @@ public class EntradaBean {
     private float cantidadEntrada;
     private float costoEntrada;
     private Date fechaVencimientoEntrada;
+    private String fechaString;
 
+    /**
+     * @return the fechaString
+     */
+    public String getFechaString() {
+        return fechaString;
+    }
+
+    /**
+     * @param fechaString the fechaString to set
+     */
+    public void setFechaString(String fechaString) {
+        this.fechaString = fechaString;
+    }
   
         
 }

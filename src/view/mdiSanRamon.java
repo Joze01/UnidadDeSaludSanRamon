@@ -255,10 +255,14 @@ public class mdiSanRamon extends javax.swing.JFrame {
     private void itemLotesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemLotesActionPerformed
         if(LoteMantenimiento.bandera==0)
         {
-            LoteMantenimiento mantenimientoLote = new LoteMantenimiento();
-            desktopPane.add(mantenimientoLote);
-            mantenimientoLote.show();
-            LoteMantenimiento.bandera=1;
+            try {
+                LoteMantenimiento mantenimientoLote = new LoteMantenimiento();
+                desktopPane.add(mantenimientoLote);
+                mantenimientoLote.show();
+                LoteMantenimiento.bandera=1;
+            } catch (SQLException ex) {
+                Logger.getLogger(mdiSanRamon.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_itemLotesActionPerformed
 

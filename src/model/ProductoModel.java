@@ -129,15 +129,19 @@ public class ProductoModel {
 
     public  JTable cargarTablaBusqueda(ProductoBean productoBean) throws SQLException
     {
+        conexion = new ConexionModel();
         utilidades = new utilModel();
         JTable tablaResultado;
         query = "select * from producto where producto.codigoProducto=?";
         PreparedStatement ps = conexion.connect.prepareStatement(query);
         ps.setString(1,productoBean.getCodigoProducto());
+        
         conexion.setRs(ps);
         rs=conexion.getRs();
-        String[] columnas = new String[]{"#","Codigo","Nombre","Descripcion,Nivel Uso, Unidad de Medida, "
-                                         + "Entrada, Saldo,Estado,Saldo total"};
+        String[] columnas = new String[]{"#","Codigo","Nombre","Descripcion","Nivel Uso"," Unidad de Medida, "
+                                         + "Entrada"};
+        
+ 
         tablaResultado=utilidades.cargarTabla(columnas, rs);
         conexion.close();
 

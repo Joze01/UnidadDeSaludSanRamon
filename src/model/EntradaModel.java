@@ -65,11 +65,12 @@ public class EntradaModel {
         ps.setInt(2, entradaData.getId_Producto().getIdProducto());
         ps.setFloat(3, entradaData.getCantidadEntrada());
         ps.setFloat(4, entradaData.getCostoEntrada());
-        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String currentTime = sdf.format(entradaData.getFechaVencimientoEntrada());
+       /* java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String currentTime = sdf.format();
         System.out.println(currentTime);
-        ps.setString(5, currentTime);
-       
+        */
+       ps.setString(5, entradaData.getFechaString());
+        System.out.println(ps);
         if(conexion.executeQuery(ps)){
             if(primero){
                 EntradaBean entradaconId = lastEntradaByProducto(entradaData.getId_Producto());

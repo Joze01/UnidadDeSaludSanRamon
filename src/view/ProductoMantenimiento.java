@@ -393,9 +393,10 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
         
         try
         {
-            ProductoBean producto = new ProductoBean();
-            producto.setCodigoProducto(txtBusqueda.getText());
-            //jTable1 = ProductoModel.cargarTablaBusqueda(producto);
+            ProductoModel modelo = new ProductoModel();
+            ProductoBean productobean = new ProductoBean();
+            productobean.setCodigoProducto(txtBusqueda.getText());
+            jTable1.setModel(modelo.cargarTablaBusqueda(productobean).getModel());
         }
         catch(Exception ex)
         {
