@@ -21,7 +21,7 @@ import model.ConexionModel;
  * @author antonio
  */
 public class UsuarioMantenimiento extends javax.swing.JInternalFrame {
-    ConexionModel conUM = new ConexionModel();
+    ConexionModel conUM ;
     ResultSet resultado=null;
     DefaultTableModel modelo1 = null;
     /**
@@ -46,21 +46,28 @@ public class UsuarioMantenimiento extends javax.swing.JInternalFrame {
     
     int verificaUsuario()
     {
-        int v=0;
+         int v=0;
         try {
-            String sql = "select loginUsuario from usuario";
-            PreparedStatement ps = conUM.connect.prepareStatement(sql);
-            conUM.setRs(ps);
-           resultado=conUM.getRs();
-
-        while (resultado.next()) 
-        {
-            if(resultado.getString("loginUsuario").equals(txtLogin.getText()))
-                v++;
-        }      
-        resultado.close();
+            conUM=new ConexionModel();
+             v=0;
+            try {
+                String sql = "select loginUsuario from usuario";
+                PreparedStatement ps = conUM.connect.prepareStatement(sql);
+                conUM.setRs(ps);
+                resultado=conUM.getRs();
+                
+                while (resultado.next())
+                {
+                    if(resultado.getString("loginUsuario").equals(txtLogin.getText()))
+                        v++;
+                }
+                resultado.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return v;
         } catch (SQLException ex) {
-            Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
         }
         return v;
     }
@@ -349,7 +356,7 @@ public class UsuarioMantenimiento extends javax.swing.JInternalFrame {
                 else{
                 String sql = "insert into usuario(nombreUsuario, loginUsuario, passwordUsuario, tipoUsuario) VALUES ('"+txtNombre.getText()+"','"+txtLogin.getText()+"','"+txtPassword.getText()+"',"+cmbTipoUsuario.getSelectedIndex()+")";
                 try {
-
+                     conUM=new ConexionModel();
                     PreparedStatement ps = conUM.connect.prepareStatement(sql);
 
                     conUM.executeQuery(ps);
@@ -366,6 +373,11 @@ public class UsuarioMantenimiento extends javax.swing.JInternalFrame {
 
     private void actualizar()
     {
+        try {
+            conUM=new ConexionModel();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql = "select * from usuario";
         modelo1.setRowCount(0);
         try {
@@ -426,7 +438,7 @@ public class UsuarioMantenimiento extends javax.swing.JInternalFrame {
                 try {
                         
                         PreparedStatement ps = conUM.connect.prepareStatement(sql);
-
+                    conUM=new ConexionModel();
                         conUM.executeQuery(ps);
 
                         limpiarUsuario();
@@ -475,7 +487,7 @@ public class UsuarioMantenimiento extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
          String sql = "update usuario set estadoUsuario = 0 WHERE idUsuario="+txtcode.getText()+";";
         try {
-
+ conUM=new ConexionModel();
             PreparedStatement ps = conUM.connect.prepareStatement(sql);
 
             conUM.executeQuery(ps);
@@ -500,17 +512,22 @@ public class UsuarioMantenimiento extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formInternalFrameClosing
 
     private void btnTodosRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTodosRegistrosActionPerformed
-        // TODO add your handling code here:
-        String sql = "select * from usuario";
-        modelo1.setRowCount(0);
-        try {
-            PreparedStatement ps = conUM.connect.prepareStatement(sql);
-
-        
-            conUM.setRs(ps);
-           generarListado();
+        try {                                                  
+            // TODO add your handling code here:
+            conUM=new ConexionModel();
+            String sql = "select * from usuario";
+            modelo1.setRowCount(0);
+            try {
+                PreparedStatement ps = conUM.connect.prepareStatement(sql);
+                
+                
+                conUM.setRs(ps);
+                generarListado();
+            } catch (SQLException ex) {
+                Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } catch (SQLException ex) {
-            Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnTodosRegistrosActionPerformed
 
