@@ -5,12 +5,17 @@
  */
 package model;
 
+import entity.LoteBean;
 import entity.ProveedorBean;
+import entity.UnidadMedidaBean;
 import javax.swing.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import static model.LoteModel.query;
+import static model.ProductoModel.conexion;
 
 /**
  *
@@ -101,4 +106,48 @@ public class ProveedorModel {
 
         return tablaResultado;
     }
+    
+        public ProveedorBean getProveedorById(int idProveedor) throws SQLException{
+        ProveedorBean nuevoProveedor = new ProveedorBean();
+        query = "SELECT * FROM proveedor WHERE idProveedor = ?";
+        conexion = new ConexionModel();
+        PreparedStatement ps = conexion.connect.prepareStatement(query);
+        ps.setInt(1, idProveedor);
+        conexion.setRs(ps);
+        rs = conexion.getRs();
+        if(rs.next()){
+           nuevoProveedor.setIdProveedor(rs.getInt(1));
+           nuevoProveedor.setNombreProveedor(rs.getString(2));
+           nuevoProveedor.setDescripcionProveedor(rs.getString(3));
+           nuevoProveedor.setEstadoProveedor(rs.getInt(4));
+        }
+        return nuevoProveedor;
+        
+    }
+    
+        public ComboBoxModel<ProveedorBean> cargarComboProveedor() throws SQLException{
+        conexion = new ConexionModel();
+        DefaultComboBoxModel<ProveedorBean> modelo = new DefaultComboBoxModel<ProveedorBean>();
+        query = "select idProveedor, nombreProveedor from proveedor";
+        PreparedStatement ps = conexion.connect.prepareStatement(query);
+        conexion.setRs(ps);
+        rs=conexion.getRs();
+        ArrayList<ProveedorBean>listadeProveedores = new ArrayList<ProveedorBean>();
+        while(rs.next()){
+
+            ProveedorBean leido = new ProveedorBean();
+            leido.setIdProveedor(rs.getInt(1));
+            leido.setNombreProveedor(rs.getString(2));
+            listadeProveedores.add(leido);
+        }
+        for(ProveedorBean obj:listadeProveedores){
+            modelo.addElement(obj);
+            System.out.println(obj.toString());
+        }
+
+
+        return modelo;
+    }
+    
+    
 }

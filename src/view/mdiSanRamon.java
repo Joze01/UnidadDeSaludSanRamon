@@ -6,7 +6,10 @@
 package view;
 
 
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -21,11 +24,16 @@ public class mdiSanRamon extends javax.swing.JFrame {
     /**
      * Creates new form mdiSanRamon
      */
+    
+    
+    
+    
     public mdiSanRamon() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setExtendedState(this.MAXIMIZED_BOTH);
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,8 +56,6 @@ public class mdiSanRamon extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         itemProductos = new javax.swing.JMenuItem();
         itemMedidas = new javax.swing.JMenuItem();
-        itemEntradas = new javax.swing.JMenuItem();
-        itemSalidas = new javax.swing.JMenuItem();
         itemLotes = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -124,22 +130,6 @@ public class mdiSanRamon extends javax.swing.JFrame {
         });
         jMenu2.add(itemMedidas);
 
-        itemEntradas.setText("Entradas");
-        itemEntradas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemEntradasActionPerformed(evt);
-            }
-        });
-        jMenu2.add(itemEntradas);
-
-        itemSalidas.setText("Salidas");
-        itemSalidas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemSalidasActionPerformed(evt);
-            }
-        });
-        jMenu2.add(itemSalidas);
-
         itemLotes.setText("Lotes");
         itemLotes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,6 +156,8 @@ public class mdiSanRamon extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+   
+    
     private void itemUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemUsuariosActionPerformed
         if(UsuarioMantenimiento.bandera==0)
         {
@@ -205,10 +197,17 @@ public class mdiSanRamon extends javax.swing.JFrame {
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         if(RecetaMantenimiento.bandera==0)
         {
-            RecetaMantenimiento mantenimientoReceta = new RecetaMantenimiento();
-            desktopPane.add(mantenimientoReceta);
-            mantenimientoReceta.show();
-            RecetaMantenimiento.bandera=1;
+            try
+            {
+                RecetaMantenimiento mantenimientoReceta = new RecetaMantenimiento();
+                desktopPane.add(mantenimientoReceta);
+                mantenimientoReceta.show();
+                RecetaMantenimiento.bandera=1;
+            }
+            catch(SQLException ex)
+            {
+                JOptionPane.showMessageDialog(jMenu1, "Error");
+            }
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
@@ -253,33 +252,17 @@ public class mdiSanRamon extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_itemMedidasActionPerformed
 
-    private void itemEntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEntradasActionPerformed
-        if(EntradaMantenimiento.bandera==0)
-        {
-            EntradaMantenimiento mantenimientoEntrada = new EntradaMantenimiento();
-            desktopPane.add(mantenimientoEntrada);
-            mantenimientoEntrada.show();
-            EntradaMantenimiento.bandera=1;
-        }
-    }//GEN-LAST:event_itemEntradasActionPerformed
-
-    private void itemSalidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSalidasActionPerformed
-        if(SalidaMantenimiento.bandera==0)
-        {
-            SalidaMantenimiento mantenimientoSalida = new SalidaMantenimiento();
-            desktopPane.add(mantenimientoSalida);
-            mantenimientoSalida.show();
-            SalidaMantenimiento.bandera=1;
-        }
-    }//GEN-LAST:event_itemSalidasActionPerformed
-
     private void itemLotesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemLotesActionPerformed
         if(LoteMantenimiento.bandera==0)
         {
-            LoteMantenimiento mantenimientoLote = new LoteMantenimiento();
-            desktopPane.add(mantenimientoLote);
-            mantenimientoLote.show();
-            LoteMantenimiento.bandera=1;
+            try {
+                LoteMantenimiento mantenimientoLote = new LoteMantenimiento();
+                desktopPane.add(mantenimientoLote);
+                mantenimientoLote.show();
+                LoteMantenimiento.bandera=1;
+            } catch (SQLException ex) {
+                Logger.getLogger(mdiSanRamon.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_itemLotesActionPerformed
 
@@ -321,13 +304,11 @@ public class mdiSanRamon extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu fileMenu;
-    private javax.swing.JMenuItem itemEntradas;
     private javax.swing.JMenuItem itemLotes;
     private javax.swing.JMenuItem itemMedidas;
     private javax.swing.JMenuItem itemProductos;
     private javax.swing.JMenuItem itemProveedores;
     private javax.swing.JMenuItem itemRecetas;
-    private javax.swing.JMenuItem itemSalidas;
     private javax.swing.JMenuItem itemUsuarios;
     private javax.swing.JMenuItem itemVales;
     private javax.swing.JMenu jMenu1;

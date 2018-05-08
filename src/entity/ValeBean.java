@@ -5,6 +5,8 @@
  */
 package entity;
 
+import java.util.Date;
+
 /**
  *
  * @author Jose
@@ -39,24 +41,11 @@ public class ValeBean {
         this.codigoVale = codigoVale;
     }
 
-    /**
-     * @return the fechaEntrega
-     */
-    public String getFechaEntrega() {
-        return fechaEntrega;
-    }
-
-    /**
-     * @param fechaEntrega the fechaEntrega to set
-     */
-    public void setFechaEntrega(String fechaEntrega) {
-        this.fechaEntrega = fechaEntrega;
-    }
 
 
     private int idVale;
     private String codigoVale;
-    private String fechaEntrega;
+    private Date fechaEntrega;
     private DestinatarioBean id_destinatario;
 
     /**
@@ -71,6 +60,20 @@ public class ValeBean {
      */
     public void setId_destinatario(DestinatarioBean id_destinatario) {
         this.id_destinatario = id_destinatario;
+    }
+
+    /**
+     * @return the fechaEntrega
+     */
+    public Date getFechaEntrega() {
+        return fechaEntrega;
+    }
+
+    /**
+     * @param fechaEntrega the fechaEntrega to set
+     */
+    public void setFechaEntrega(Date fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
     }
     
 }

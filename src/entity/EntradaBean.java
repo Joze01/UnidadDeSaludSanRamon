@@ -5,11 +5,27 @@
  */
 package entity;
 
+import java.util.Date;
+
 /**
  *
  * @author Jose
  */
 public class EntradaBean {
+
+    /**
+     * @return the fechaVencimientoEntrada
+     */
+    public Date getFechaVencimientoEntrada() {
+        return fechaVencimientoEntrada;
+    }
+
+    /**
+     * @param fechaVencimientoEntrada the fechaVencimientoEntrada to set
+     */
+    public void setFechaVencimientoEntrada(Date fechaVencimientoEntrada) {
+        this.fechaVencimientoEntrada = fechaVencimientoEntrada;
+    }
 
     /**
      * @return the id_Lote
@@ -82,28 +98,28 @@ public class EntradaBean {
         this.costoEntrada = costoEntrada;
     }
 
-    /**
-     * @return the fechaVencimientoEntrada
-     */
-    public String getFechaVencimientoEntrada() {
-        return fechaVencimientoEntrada;
-    }
-
-    /**
-     * @param fechaVencimientoEntrada the fechaVencimientoEntrada to set
-     */
-    public void setFechaVencimientoEntrada(String fechaVencimientoEntrada) {
-        this.fechaVencimientoEntrada = fechaVencimientoEntrada;
-    }
-
    
     private int idEntrada;
     private LoteBean id_Lote;
     private ProductoBean id_Producto;
     private float cantidadEntrada;
     private float costoEntrada;
-    private String fechaVencimientoEntrada;
+    private Date fechaVencimientoEntrada;
+    private String fechaString;
 
+    /**
+     * @return the fechaString
+     */
+    public String getFechaString() {
+        return fechaString;
+    }
+
+    /**
+     * @param fechaString the fechaString to set
+     */
+    public void setFechaString(String fechaString) {
+        this.fechaString = fechaString;
+    }
   
         
 }
