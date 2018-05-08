@@ -7,10 +7,12 @@
 package model;
 
 import entity.DestinatarioBean;
+import entity.ProveedorBean;
 import javax.swing.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -100,4 +102,29 @@ public class DestinatarioModel {
 
         return tablaResultado;
     }
+    
+        public ComboBoxModel<DestinatarioBean> cargarComboDestinatario() throws SQLException{
+        conexion = new ConexionModel();
+        DefaultComboBoxModel<DestinatarioBean> modelo = new DefaultComboBoxModel<DestinatarioBean>();
+        query = "select idDestinatario, nombreDestinatario from destinatario";
+        PreparedStatement ps = conexion.connect.prepareStatement(query);
+        conexion.setRs(ps);
+        rs=conexion.getRs();
+        ArrayList<DestinatarioBean>listaDestinatarios = new ArrayList<DestinatarioBean>();
+        while(rs.next()){
+
+            DestinatarioBean leido = new DestinatarioBean();
+            leido.setIdDestinatario(rs.getInt(1));
+            leido.setNombreDestinatario(rs.getString(2));
+            listaDestinatarios.add(leido);
+        }
+        for(DestinatarioBean obj:listaDestinatarios){
+            modelo.addElement(obj);
+            
+        }
+
+
+        return modelo;
+    }  
+    
 }

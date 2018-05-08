@@ -72,4 +72,9 @@ public class DestinatarioBean {
     private String nombreDestinatario;
     private String descripcionDestintario;
     private int estadoDestinatario;
+    
+        @Override
+    public String toString() {
+        return this.nombreDestinatario;
+    }
 }

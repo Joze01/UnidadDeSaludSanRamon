@@ -7,9 +7,11 @@ package view;
 
 import com.sun.org.apache.bcel.internal.generic.SALOAD;
 import controller.productoController;
+import entity.DestinatarioBean;
 import entity.ProductoBean;
 import entity.RecetaBean;
 import entity.SalidaBean;
+import entity.ValeBean;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,18 +20,21 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.DestinatarioModel;
 import model.ProductoModel;
 import model.RecetaModel;
 import model.SalidaModel;
+import model.ValeModel;
 
 /**
  *
  * @author antonio
  */
 public class ValeMantenimiento extends javax.swing.JInternalFrame {
+    DestinatarioModel modeloDestinatario = new  DestinatarioModel();
     productoController controladorProducto = new productoController();
     ProductoBean objeProducto;
-    RecetaBean objeReceta;
+    ValeBean objVale;
     List<SalidaBean> listaSalidas = new ArrayList<SalidaBean>();
 
     /**
@@ -40,6 +45,7 @@ public class ValeMantenimiento extends javax.swing.JInternalFrame {
     
     public ValeMantenimiento() throws SQLException{
         initComponents();
+        cmbDestinatario.setModel(modeloDestinatario.cargarComboDestinatario());
         tblTodosProductos.setModel(controladorProducto.cargarTabla().getModel());
     }
 
@@ -66,9 +72,11 @@ public class ValeMantenimiento extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         btnEntregarReceta = new javax.swing.JButton();
         btnReiniciar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        cmbDestinatario = new javax.swing.JComboBox<DestinatarioBean>();
 
         setClosable(true);
-        setTitle("Recetas");
+        setTitle("Vales");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -166,7 +174,7 @@ public class ValeMantenimiento extends javax.swing.JInternalFrame {
             tblReceta.getColumnModel().getColumn(1).setResizable(false);
         }
 
-        jLabel4.setText("Productos de la receta");
+        jLabel4.setText("Productos del vale");
 
         btnEntregarReceta.setText("Finalizar y Entregar");
         btnEntregarReceta.setEnabled(false);
@@ -183,6 +191,8 @@ public class ValeMantenimiento extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel5.setText("Destinatario");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -191,29 +201,37 @@ public class ValeMantenimiento extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 151, Short.MAX_VALUE)
-                        .addComponent(btnCrearReceta))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnReiniciar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnEntregarReceta))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnAgregar))
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel4))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnAgregar))
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnReiniciar)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                                    .addComponent(cmbDestinatario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEntregarReceta)))
-                .addContainerGap())
+                        .addComponent(btnCrearReceta)
+                        .addGap(31, 31, 31))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,24 +241,28 @@ public class ValeMantenimiento extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCrearReceta))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(cmbDestinatario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregar))
-                .addGap(15, 15, 15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEntregarReceta)
                     .addComponent(btnReiniciar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
 
         pack();
@@ -283,9 +305,9 @@ public class ValeMantenimiento extends javax.swing.JInternalFrame {
             SalidaBean objeSalida = new SalidaBean();
             objeSalida.setId_producto(objeProducto);
             objeSalida.setCantidadSalida(Float.parseFloat(txtCantidad.getText()));
-            objeSalida.setTipoSalida(1); ///AQUI ESTA EL TIPO
-            objeSalida.setId_receta(objeReceta);  //NULL
-            objeSalida.setId_vale(null);//PASAR EL VALE
+            objeSalida.setTipoSalida(2); ///AQUI ESTA EL TIPO
+            objeSalida.setId_receta(null);  //NULL
+            objeSalida.setId_vale(objVale);//PASAR EL VALE
             if(modelosalidas.isSuficente(objeSalida)){
             listaSalidas.add(objeSalida);
             txtCantidad.setEnabled(false);
@@ -300,7 +322,7 @@ public class ValeMantenimiento extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-    
+    ValeModel modeloVale;
     private void btnCrearRecetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearRecetaActionPerformed
         // TODO add your handling code here:
         if(txtCodigo.getText().trim().equals(""))
@@ -310,11 +332,14 @@ public class ValeMantenimiento extends javax.swing.JInternalFrame {
         else
         try
         {
-            objeReceta= new RecetaBean();
-            objeReceta.setFechaEntrega(new Date());
-            objeReceta.setCodigoReceta(txtCodigo.getText());
-            new RecetaModel().newReceta(objeReceta);
-            objeReceta = new RecetaModel().getLastReceta();
+            objVale= new ValeBean();
+            objVale.setCodigoVale(txtCodigo.getText());
+            objVale.setId_destinatario((DestinatarioBean) cmbDestinatario.getSelectedItem());
+            //objeReceta.setCodigoReceta();
+            modeloVale=new ValeModel();
+            modeloVale.newVale(objVale);
+           
+            objVale = modeloVale.getLastReceta();
             
             //Habilitando y deshabilitando
             txtCodigo.setEnabled(false);
@@ -352,7 +377,7 @@ public class ValeMantenimiento extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         controladorProducto = new productoController();
         objeProducto = null;
-        objeReceta=null;
+        objVale=null;
         List<SalidaBean> listaSalidas = new ArrayList<SalidaBean>();
         txtCodigo.setEnabled(true);
         btnCrearReceta.setEnabled(true);
@@ -381,10 +406,12 @@ public class ValeMantenimiento extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnCrearReceta;
     private javax.swing.JButton btnEntregarReceta;
     private javax.swing.JButton btnReiniciar;
+    private javax.swing.JComboBox<DestinatarioBean> cmbDestinatario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tblReceta;
