@@ -22,9 +22,7 @@ import model.EntradaModel;
 import model.LoteModel;
 import model.ProductoModel;
 import model.ProveedorModel;
-import org.jdatepicker.graphics.*;
-import org.jdatepicker.impl.*;
-import org.jdatepicker.util.*;
+
 
 
 
@@ -49,7 +47,7 @@ public class LoteMantenimiento extends javax.swing.JInternalFrame {
     entradaController controlador ;
     public LoteMantenimiento() throws SQLException {
         initComponents();
-        UtilDateModel model = new UtilDateModel();
+    
         jButton1.setEnabled(false);
         jXDatePicker2.setEnabled(false);
         jTable1.setEnabled(false);
