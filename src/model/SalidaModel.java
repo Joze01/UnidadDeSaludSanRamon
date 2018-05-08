@@ -54,9 +54,9 @@ public class SalidaModel {
         return conexion.executeQuery(ps);
     }
 
-    public boolean newSalida(SalidaBean salidaData) throws SQLException {
+    public boolean newSalida(SalidaBean salidaData) throws SQLException {   
         resultado = false;
-
+        
         ProductoBean objeProducto = new ProductoModel().getProductoBeanById(salidaData.getId_producto().getIdProducto());
         if(objeProducto.getSaldoEntradaProducto()>=salidaData.getCantidadSalida())
         {
@@ -73,66 +73,51 @@ public class SalidaModel {
             float cantidadRestante = salidaData.getCantidadSalida();
             while(cantidadRestante>0)
             {
-                salidaData.setId_Entrada(new EntradaModel().getEntradaById(objeProducto.getId_EntradaProducto().getIdEntrada()));
-                insertSalida(salidaData);
-                objeProducto.setSaldoEntradaProducto(objeProducto.getSaldoEntradaProducto()-salidaData.getCantidadSalida());
-                EntradaBean objeEntrada = new EntradaModel().getEntradaById(objeProducto.getId_EntradaProducto().getIdEntrada());
-                objeEntrada.setCantidadEntrada(objeProducto.getSaldoEntradaProducto());
-                new ProductoModel().updateBandera(objeEntrada);
-            }
-            else
-            {
-                float cantidadRestante = salidaData.getCantidadSalida();
-                while(cantidadRestante>0)
+                System.out.println("Cantidad Restante " +cantidadRestante);
+                System.out.println("Saldo Producto " +objeProducto.getSaldoEntradaProducto() + " ENTRADA " + objeProducto.getId_EntradaProducto().getIdEntrada());
+                if(cantidadRestante>objeProducto.getSaldoEntradaProducto())
                 {
-                    System.out.println("Cantidad Restante " +cantidadRestante);
-                    System.out.println("Saldo Producto " +objeProducto.getSaldoEntradaProducto() + " ENTRADA " + objeProducto.getId_EntradaProducto().getIdEntrada());
-                    if(cantidadRestante>objeProducto.getSaldoEntradaProducto())
-                    {
-                        cantidadRestante-=objeProducto.getSaldoEntradaProducto();
-                        EntradaBean objeEntrada = new EntradaModel().getEntradaById(objeProducto.getId_EntradaProducto().getIdEntrada());
-                        objeEntrada.setCantidadEntrada(objeProducto.getSaldoEntradaProducto());
-                        salidaData.setId_Entrada(new EntradaModel().getEntradaById(objeProducto.getId_EntradaProducto().getIdEntrada()));
-                        salidaData.setCantidadSalida(objeProducto.getSaldoEntradaProducto());
-                        insertSalida(salidaData);
-                        objeEntrada = new EntradaModel().getNextEntrada(objeEntrada);
-                        System.out.println("NEXT ID ENTRADA " + objeEntrada.getIdEntrada());
-                        objeProducto.setId_EntradaProducto(objeEntrada);
-                        objeProducto.setSaldoEntradaProducto(objeEntrada.getCantidadEntrada());
-                        new ProductoModel().updateBandera(objeEntrada);
-                    }
-                    else
-                    {
-                        salidaData.setCantidadSalida(cantidadRestante);
-                        salidaData.setId_Entrada(new EntradaModel().getEntradaById(objeProducto.getId_EntradaProducto().getIdEntrada()));
-                        insertSalida(salidaData);
-                        objeProducto.setSaldoEntradaProducto(objeProducto.getSaldoEntradaProducto()-cantidadRestante);
-                        System.out.println("pupu" + objeProducto.getSaldoEntradaProducto());
-                        EntradaBean objeEntrada = new EntradaModel().getEntradaById(objeProducto.getId_EntradaProducto().getIdEntrada());
-                        objeEntrada.setCantidadEntrada(objeProducto.getSaldoEntradaProducto());
-                        objeEntrada.setIdEntrada(objeProducto.getId_EntradaProducto().getIdEntrada());
-                        System.out.println("SALDO ENTRADA BANDERA " +objeEntrada.getCantidadEntrada() );
-                        new ProductoModel().updateBandera(objeEntrada);
-                        cantidadRestante=0;
-                    }
-
+                    cantidadRestante-=objeProducto.getSaldoEntradaProducto();
+                    EntradaBean objeEntrada = new EntradaModel().getEntradaById(objeProducto.getId_EntradaProducto().getIdEntrada());
+                    objeEntrada.setCantidadEntrada(objeProducto.getSaldoEntradaProducto());
+                    salidaData.setId_Entrada(new EntradaModel().getEntradaById(objeProducto.getId_EntradaProducto().getIdEntrada()));
+                    salidaData.setCantidadSalida(objeProducto.getSaldoEntradaProducto());
+                    insertSalida(salidaData);
+                    objeEntrada = new EntradaModel().getNextEntrada(objeEntrada);
+                    System.out.println("NEXT ID ENTRADA " + objeEntrada.getIdEntrada());
+                    objeProducto.setId_EntradaProducto(objeEntrada);
+                    objeProducto.setSaldoEntradaProducto(objeEntrada.getCantidadEntrada());
+                    new ProductoModel().updateBandera(objeEntrada);
                 }
+                else
+                {
+                    salidaData.setCantidadSalida(cantidadRestante);
+                    salidaData.setId_Entrada(new EntradaModel().getEntradaById(objeProducto.getId_EntradaProducto().getIdEntrada()));
+                    insertSalida(salidaData);
+                    objeProducto.setSaldoEntradaProducto(objeProducto.getSaldoEntradaProducto()-cantidadRestante);
+                    System.out.println("pupu" + objeProducto.getSaldoEntradaProducto());
+                    EntradaBean objeEntrada = new EntradaModel().getEntradaById(objeProducto.getId_EntradaProducto().getIdEntrada());
+                    objeEntrada.setCantidadEntrada(objeProducto.getSaldoEntradaProducto());
+                    objeEntrada.setIdEntrada(objeProducto.getId_EntradaProducto().getIdEntrada());
+                    System.out.println("SALDO ENTRADA BANDERA " +objeEntrada.getCantidadEntrada() );
+                    new ProductoModel().updateBandera(objeEntrada);
+                    cantidadRestante=0;
+                }
+                
             }
-
-
-            /*query = "INSERT INTO salida(id_entrada,cantidadSalida,tipoSalida, id_receta,id_vale) VALUES(?,?,?,?,?)";
-            conexion = new ConexionModel();
-            PreparedStatement ps = conexion.connect.prepareStatement(query);
-            ps.setInt(1, salidaData.getId_Entrada().getIdEntrada());
-            ps.setFloat(2, salidaData.getCantidadSalida());
-            ps.setInt(3, salidaData.getTipoSalida());
-            ps.setInt(4, salidaData.getId_receta().getIdReceta());
-            ps.setInt(5, salidaData.getId_vale().getIdVale());
-            return conexion.executeQuery(ps);*/
-        return true;
         }
-        System.out.println("No son suficentes");
-        return false;
+            
+        
+        /*query = "INSERT INTO salida(id_entrada,cantidadSalida,tipoSalida, id_receta,id_vale) VALUES(?,?,?,?,?)";
+        conexion = new ConexionModel();
+        PreparedStatement ps = conexion.connect.prepareStatement(query);
+        ps.setInt(1, salidaData.getId_Entrada().getIdEntrada());
+        ps.setFloat(2, salidaData.getCantidadSalida());
+        ps.setInt(3, salidaData.getTipoSalida());
+        ps.setInt(4, salidaData.getId_receta().getIdReceta());
+        ps.setInt(5, salidaData.getId_vale().getIdVale());
+        return conexion.executeQuery(ps);*/
+        return true;
     }
 
 
