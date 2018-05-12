@@ -15,6 +15,8 @@ import javax.swing.table.DefaultTableModel;
 import entity.UnidadMedidaBean;
 import net.sf.jasperreports.engine.JRException;
 import report.*;
+import view.modal.ReporteEntradModal;
+import view.modal.ReporteSalidaModal;
 /**
  *
  * @author antonio
@@ -53,6 +55,7 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
         txtBusqueda = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
@@ -72,20 +75,20 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
         setClosable(true);
         setTitle("Productos");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
-            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameClosing(evt);
             }
-            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
             }
-            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
             }
         });
 
@@ -133,10 +136,17 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton1.setText("Generar Reporte");
+        jButton1.setText("Generar Reporte Salidas");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Generar Reporte Salidas");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -169,6 +179,8 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1)))
                 .addContainerGap())
         );
@@ -188,7 +200,9 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addGap(19, 19, 19))
         );
 
@@ -429,6 +443,8 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
         model.setRowCount(0);
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
+    public ReporteSalidaModal modalreporte = new ReporteSalidaModal();
+    public ReporteEntradModal modelreporte2 = new  ReporteEntradModal();
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
         // TODO add your handling code here:
         if (evt.getClickCount() == 1)
@@ -439,20 +455,23 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
             txtNombre.setText(modelo.getValueAt(indexRow, 2).toString());
             txtNivelUso.setText(modelo.getValueAt(indexRow,4).toString());
             txtDescripcion.setText(modelo.getValueAt(indexRow, 3).toString());
+            modalreporte.ProductoReporteID=modelo.getValueAt(indexRow, 0).toString();
+            modelreporte2.ProductoReporteID=modelo.getValueAt(indexRow, 0).toString();
+            
+            
+
         }
     }//GEN-LAST:event_jTable1MousePressed
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            // TODO add your handling code here:
-            generarReporte generador = new generarReporte();
-            generador.generarSalidasByProducto("3", "2018-01-01", "2019-01-01");
-        } catch (JRException | SQLException ex) {
-            Logger.getLogger(ProductoMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductoMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        modalreporte.setVisible(true);
+        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        modalreporte.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -464,6 +483,7 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnTodosRegistros;
     private javax.swing.JComboBox<UnidadMedidaBean> cmbUnidadMedida;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

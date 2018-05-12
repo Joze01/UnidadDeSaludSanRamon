@@ -300,7 +300,11 @@ public class LoteMantenimiento extends javax.swing.JInternalFrame {
             SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             formater.format(jXDatePicker2.getDate());
             //System.out.println(formater.format(cals.getTime()));
-            
+//             generarReporte generador = new generarReporte();
+           // SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
+           
+
+                //fechaInicial=
             
            EntradaBean nuevaEntrada = new EntradaBean();
            
@@ -308,7 +312,7 @@ public class LoteMantenimiento extends javax.swing.JInternalFrame {
            nuevaEntrada.setId_Lote(ultimoLote);
            nuevaEntrada.setId_Producto(productoEntrada);
            nuevaEntrada.setCantidadEntrada(Float.parseFloat(jTextField2.getText()));
-           nuevaEntrada.setFechaString(formater.format(cals.getTime()));
+           nuevaEntrada.setFechaString(formater.format(jXDatePicker2.getDate()).toString());
    
            modeloEntrada.newEntrada(nuevaEntrada);
            

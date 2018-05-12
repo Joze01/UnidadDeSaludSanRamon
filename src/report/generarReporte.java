@@ -35,7 +35,7 @@ public class generarReporte {
     
     public void generarSalidasByProducto(String idProducto,String fechaInicial,String FechaFinal) throws JRException, SQLException{
         ConexionModel conec = new ConexionModel();
-        File reportFile = new File("C:\\Users\\Jose\\Desktop\\San Ramon\\UnidadDeSaludSanRamon\\src\\report\\salidaProducto.jasper");
+        File reportFile = new File("/Users/Jose/Desktop/San ramon/UnidadDeSaludSanRamon/src/report/salidaProducto.jasper");
          Map parameters = new HashMap();
          parameters.put("productID", idProducto);
          parameters.put("initialDate", fechaInicial);
@@ -49,7 +49,22 @@ public class generarReporte {
 
        
     }
-    
+    public void generarEntradaByProducto(String idProducto,String fechaInicial,String FechaFinal) throws JRException, SQLException{
+        ConexionModel conec = new ConexionModel();
+        File reportFile = new File("/Users/Jose/Desktop/San ramon/UnidadDeSaludSanRamon/src/report/entradaProducto.jasper");
+         Map parameters = new HashMap();
+         parameters.put("productID", idProducto);
+         parameters.put("initialDate", fechaInicial);
+         parameters.put("finalDate", FechaFinal);
+          try {
+            JasperPrint print = JasperFillManager.fillReport(reportFile.getPath(), parameters, conec.connect );
+            JasperViewer.viewReport(print);
+        } catch (JRException ex) {
+              System.out.println(ex.toString());
+        }
+
+       
+    }
     
     
 }
