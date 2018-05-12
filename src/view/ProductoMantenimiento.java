@@ -449,6 +449,8 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
             generador.generarSalidasByProducto("2", "2018-01-01", "2019-01-01");
         } catch (JRException ex) {
             Logger.getLogger(ProductoMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductoMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
