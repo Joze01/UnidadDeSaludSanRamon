@@ -362,54 +362,72 @@ public class UnidadMedidaMantenimiento extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnTodosRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTodosRegistrosActionPerformed
-        // TODO add your handling code here:
-        String sql = "select * from unidadmedida";
-        modelo1.setRowCount(0);
-        try {
-            PreparedStatement ps = conUM.connect.prepareStatement(sql);
 
-        
-            conUM.setRs(ps);
-           generarListado();
+        try {                                                  
+            
+            // TODO add your handling code here:
+            conUM=new ConexionModel();
+            String sql = "select * from unidadmedida";
+            modelo1.setRowCount(0);
+            try {
+                PreparedStatement ps = conUM.connect.prepareStatement(sql);
+                
+                
+                conUM.setRs(ps);
+                generarListado();
+            } catch (SQLException ex) {
+                Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnTodosRegistrosActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
-        if(txtNombreUnidad.getText().equals("")||txtDescripcion.getText().equals(""))
-        {
-            JOptionPane.showMessageDialog(this, "¡Debe llenar los campos vacios!","Alerta",JOptionPane.INFORMATION_MESSAGE);
-        }
-        else{
-        String sql = "update unidadmedida set nombreUnidadMedida='"+txtNombreUnidad.getText()+"', descripcionUnidadMedida='"+txtDescripcion.getText()+"' WHERE idUnidadMedida="+txtcode.getText()+";";
         try {
-
-            PreparedStatement ps = conUM.connect.prepareStatement(sql);
-
-            conUM.executeQuery(ps);
-
-            limpiarMedida();
-            btnIngresar.setEnabled(true);
-            actualizar();
-            } catch (SQLException ex) {
-                Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            // TODO add your handling code here:
+            conUM=new ConexionModel();
+            if(txtNombreUnidad.getText().equals("")||txtDescripcion.getText().equals(""))
+            {
+                JOptionPane.showMessageDialog(this, "¡Debe llenar los campos vacios!","Alerta",JOptionPane.INFORMATION_MESSAGE);
             }
+            else{
+                String sql = "update unidadmedida set nombreUnidadMedida='"+txtNombreUnidad.getText()+"', descripcionUnidadMedida='"+txtDescripcion.getText()+"' WHERE idUnidadMedida="+txtcode.getText()+";";
+                try {
+                    
+                    PreparedStatement ps = conUM.connect.prepareStatement(sql);
+                    
+                    conUM.executeQuery(ps);
+                    
+                    limpiarMedida();
+                    btnIngresar.setEnabled(true);
+                    actualizar();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
-        String sql = "update unidadmedida set estadoUnidadMedida = 0 WHERE idUnidadMedida="+txtcode.getText()+";";
-        try {
-
-            PreparedStatement ps = conUM.connect.prepareStatement(sql);
-
-            conUM.executeQuery(ps);
-
-            limpiarMedida();
-            btnIngresar.setEnabled(true);
+        try {                                            
+            // TODO add your handling code here:
+            conUM=new ConexionModel();
+            String sql = "update unidadmedida set estadoUnidadMedida = 0 WHERE idUnidadMedida="+txtcode.getText()+";";
+            try {
+                
+                PreparedStatement ps = conUM.connect.prepareStatement(sql);
+                
+                conUM.executeQuery(ps);
+                
+                limpiarMedida();
+                btnIngresar.setEnabled(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         } catch (SQLException ex) {
             Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -448,24 +466,29 @@ public class UnidadMedidaMantenimiento extends javax.swing.JInternalFrame {
         }
     }
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        // TODO add your handling code here:
-        if(txtNombreUnidad.getText().equals("")||txtDescripcion.getText().equals(""))
-        {
-            JOptionPane.showMessageDialog(this, "¡Debe llenar los campos vacios!","Alerta",JOptionPane.INFORMATION_MESSAGE);
-        }
-        else{
-        String sql = "insert into unidadmedida(nombreUnidadMedida, descripcionUnidadMedida) VALUES ('"+txtNombreUnidad.getText()+"','"+txtDescripcion.getText()+"')";
         try {
-
-            PreparedStatement ps = conUM.connect.prepareStatement(sql);
-
-            conUM.executeQuery(ps);
-
-            limpiarMedida();
-            actualizar();
+            // TODO add your handling code here:
+            conUM=new ConexionModel();
+            if(txtNombreUnidad.getText().equals("")||txtDescripcion.getText().equals(""))
+            {
+                JOptionPane.showMessageDialog(this, "¡Debe llenar los campos vacios!","Alerta",JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                String sql = "insert into unidadmedida(nombreUnidadMedida, descripcionUnidadMedida) VALUES ('"+txtNombreUnidad.getText()+"','"+txtDescripcion.getText()+"')";
+                try {
+                    
+                    PreparedStatement ps = conUM.connect.prepareStatement(sql);
+                    
+                    conUM.executeQuery(ps);
+                    
+                    limpiarMedida();
+                    actualizar();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         } catch (SQLException ex) {
             Logger.getLogger(UnidadMedidaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
-        }
         }
     }//GEN-LAST:event_btnIngresarActionPerformed
 

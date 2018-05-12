@@ -52,12 +52,12 @@ public class ProductoModel {
 
     public  boolean updateProducto(ProductoBean productoBean) throws SQLException
     {
-        query ="update producto set" +
-               "producto.nombreProducto = ?," +
-               "producto.nivelUsoProducto = ?," +
-               "producto.descripcionProducto = ?," +
-               "producto.id_UnidadMedida = ?" +
-               "where producto.codigoProducto = ?";
+        query ="update producto set " +
+               "nombreProducto = ?," +
+               "nivelUsoProducto = ?," +
+               "descripcionProducto = ?," +
+               "id_UnidadMedida = ? " +
+               "where codigoProducto = ?";
         conexion = new ConexionModel();
         PreparedStatement ps = conexion.connect.prepareStatement(query);
         ps.setString(1,productoBean.getNombreProducto());

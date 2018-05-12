@@ -143,7 +143,7 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton2.setText("Generar Reporte Salidas");
+        jButton2.setText("Generar Reporte Entradas");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -371,6 +371,7 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
             producto.setNombreProducto(txtNombre.getText());
             producto.setNivelUsoProducto(txtNivelUso.getText());
             producto.setDescripcionProducto(txtDescripcion.getText());
+            producto.setId_unidadMedida((UnidadMedidaBean) cmbUnidadMedida.getSelectedItem());
              if(controlador.updateProducto(producto)){
                 JOptionPane.showMessageDialog(rootPane, "Completado");
             }else{
