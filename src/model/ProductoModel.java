@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
 import entity.UnidadMedidaBean;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -85,6 +86,29 @@ public class ProductoModel {
             return true;
         }
         return false;
+    }
+    
+    public List<ProductoBean> consultarTodo() throws SQLException
+    {
+       List<ProductoBean> resp = new ArrayList<ProductoBean>();
+       conexion = new ConexionModel();
+       query = "select * from producto order by codigoProducto asc";
+       PreparedStatement ps = conexion.connect.prepareStatement(query);
+       conexion.setRs(ps);
+       rs=conexion.getRs();
+       while(rs.next())
+       {
+           ProductoBean objeProducto = new ProductoBean();
+           objeProducto.setIdProducto(rs.getInt("idProducto"));
+           objeProducto.setCodigoProducto(rs.getString("codigoProducto"));
+           objeProducto.setNombreProducto(rs.getString("nombreProducto"));
+           objeProducto.setDescripcionProducto(rs.getString("descripcionProducto"));
+           objeProducto.setNivelUsoProducto(rs.getString("nivelUsoProducto"));
+           objeProducto.setId_unidadMedida(new UnidadMedidaModel().getUnidadMedidaById(rs.getInt("id_UnidadMedida")));
+           resp.add(objeProducto);
+       }
+       if(resp.size()==0) resp= null;
+       return resp;
     }
 
     public  JTable cargarTabla() throws SQLException

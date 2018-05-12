@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2aa362fd-31c5-4e5b-b2ea-3e78abfc30e5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="productID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[2]]></defaultValueExpression>
+	</parameter>
+	<parameter name="initialDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[2015-01-01]]></defaultValueExpression>
+	</parameter>
+	<parameter name="finalDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[2019-06-06]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select p.nombreProducto, p.descripcionProducto,s.cantidadSalida, DATE_FORMAT(s.fechaSalida,'%d/%m/%Y'), l.codigoLote, if(s.tipoSalida = 1,'Receta','Vale') as tipoSalida from salida s, producto p, entrada e, lote l where e.id_lote = l.idlote and e.id_producto = p.idproducto and e.identrada = s.id_entrada and p.idproducto = $P{productID} and s.fechaSalida between $P{initialDate} and  $P{finalDate}]]>
+	</queryString>
+	<field name="nombreProducto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descripcionProducto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cantidadSalida" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DATE_FORMAT(s.fechaSalida,&apos;%d/%m/%Y&apos;)" class="java.lang.String"/>
+	<field name="codigoLote" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipoSalida" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="22" width="65" height="20" uuid="5a591906-d5de-439e-91b8-35bfa119c348"/>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="67" y="22" width="132" height="20" uuid="addd8a8e-3693-460d-be9d-33199e44f967"/>
+				<textFieldExpression><![CDATA[$F{nombreProducto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="42" width="65" height="20" uuid="1f13af16-d02e-4f79-95e9-b9645ef42561"/>
+				<text><![CDATA[Descripción:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="67" y="42" width="132" height="37" uuid="fba00f8e-e991-41d2-b45d-c8fb9feac30f"/>
+				<textFieldExpression><![CDATA[$F{descripcionProducto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="92" y="0" width="92" height="20" uuid="fba179a9-500a-47f2-a6c6-9b75064cdf77"/>
+				<text><![CDATA[Cantidad de Salida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="184" y="0" width="92" height="20" uuid="2bbc9f12-0380-4d15-8bc7-26dc872562fa"/>
+				<text><![CDATA[Fecha de Salida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="0" width="92" height="20" uuid="3238bb84-7bb2-4844-8497-23de818a63a9"/>
+				<text><![CDATA[Lote]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="92" height="20" uuid="fa92e4b6-cca5-420d-b31d-64dc7b5d1dfe"/>
+				<text><![CDATA[Origen Salida]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="92" y="0" width="92" height="20" uuid="d61a25e4-ff02-4952-ac1c-05ea82fbf87c"/>
+				<textFieldExpression><![CDATA[$F{cantidadSalida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="184" y="0" width="92" height="20" uuid="e4871045-eca8-4e15-8f16-3d5d8318fcb1"/>
+				<textFieldExpression><![CDATA[$F{DATE_FORMAT(s.fechaSalida,'%d/%m/%Y')}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="0" width="92" height="20" uuid="46e24b90-4b33-4262-9ee8-75cf05d53d4a"/>
+				<textFieldExpression><![CDATA[$F{codigoLote}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="92" height="20" uuid="1ddf3e89-8f8d-4112-9015-1a48ca895d10"/>
+				<textFieldExpression><![CDATA[$F{tipoSalida}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
