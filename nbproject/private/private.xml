@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/alvin/Documents/NetBeansProjects/UnidadDeSaludSanRamon/src/model/SalidaModel.java</file>
-            <file>file:/C:/Users/alvin/Documents/NetBeansProjects/UnidadDeSaludSanRamon/src/model/ReportDataModel.java</file>
-            <file>file:/C:/Users/alvin/Documents/NetBeansProjects/UnidadDeSaludSanRamon/src/model/ConexionModel.java</file>
-            <file>file:/C:/Users/alvin/Documents/NetBeansProjects/UnidadDeSaludSanRamon/src/model/ProductoModel.java</file>
-            <file>file:/C:/Users/alvin/Documents/NetBeansProjects/UnidadDeSaludSanRamon/src/entity/MensualDetalladoBean.java</file>
-            <file>file:/C:/Users/alvin/Documents/NetBeansProjects/UnidadDeSaludSanRamon/src/entity/ProductoBean.java</file>
+            <file>file:/C:/Users/Jose/Desktop/San%20Ramon/UnidadDeSaludSanRamon/src/view/LoginAdmin.java</file>
+            <file>file:/C:/Users/Jose/Desktop/San%20Ramon/UnidadDeSaludSanRamon/src/model/LoginModel.java</file>
+            <file>file:/C:/Users/Jose/Desktop/San%20Ramon/UnidadDeSaludSanRamon/src/view/ProductoMantenimiento.java</file>
         </group>
     </open-files>
 </project-private>
