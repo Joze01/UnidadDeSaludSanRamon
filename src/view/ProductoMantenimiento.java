@@ -446,7 +446,7 @@ public class ProductoMantenimiento extends javax.swing.JInternalFrame {
         try {
             // TODO add your handling code here:
             generarReporte generador = new generarReporte();
-            generador.generarSalidasByProducto("2", "2018-01-01", "2019-01-01");
+            generador.generarSalidasByProducto("3", "2018-01-01", "2019-01-01");
         } catch (JRException ex) {
             Logger.getLogger(ProductoMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
         }
